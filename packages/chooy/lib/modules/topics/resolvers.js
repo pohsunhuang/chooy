@@ -24,7 +24,11 @@ const resolvers = {
         const textSelector = { $text: { $search: terms.query } };
         const prefixSelector = { names: { $regex: '^' + terms.query, $options: '-i' } };
         let selectors = [];
-        selectors.push(terms.searchText ? textSelector : null, prefixSelector);
+        if ( terms.searchText ) {
+          selectors.push(textSelector);
+        }
+
+        selectors.push(prefixSelector);
 
         // preform Mongo query
         const tmpDocs = collection.find({$or: selectors}, options).fetch();
@@ -71,7 +75,11 @@ const resolvers = {
         const textSelector = { $text: { $search: terms.query } };
         const prefixSelector = { names: { $regex: '^' + terms.query, $options: '-i' } };
         let selectors = [];
-        selectors.push(terms.searchText ? textSelector : null, prefixSelector);
+        if ( terms.searchText ) {
+          selectors.push(textSelector);
+        }
+
+        selectors.push(prefixSelector);
 
         return collection.find({$or: selectors}).count();
       } else {

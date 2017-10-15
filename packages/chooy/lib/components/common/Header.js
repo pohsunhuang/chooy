@@ -33,5 +33,3 @@ Header.propTypes = {
 };
 
 registerComponent('Header', Header, withCurrentUser);
-
-export default withCurrentUser(Header);

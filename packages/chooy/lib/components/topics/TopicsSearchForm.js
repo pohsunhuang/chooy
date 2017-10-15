@@ -160,9 +160,7 @@ const options = {
   pollInterval: 0,
 }
 
-const TopicsSearchFormWithList = withList(options)(TopicsSearchForm);
-
-const TopicsSearchFormWithRouter = withRouter(TopicsSearchFormWithList);
+registerComponent('TopicsSearchFormWithRouter', TopicsSearchForm, [withList, options], withRouter);
 
 class TopicsSearchFormWithTerms extends Component {
   constructor(props){
@@ -181,7 +179,7 @@ class TopicsSearchFormWithTerms extends Component {
 
   render() {
     return (
-      <TopicsSearchFormWithRouter 
+      <Components.TopicsSearchFormWithRouter 
         terms={{query: this.state.query, nothingForEmptyQuery: true, unique: true}}
         query={this.state.query}
         updateQuery={this.updateQuery}
@@ -191,5 +189,3 @@ class TopicsSearchFormWithTerms extends Component {
 }
 
 registerComponent('TopicsSearchForm', TopicsSearchFormWithTerms);
-
-export default TopicsSearchFormWithTerms;

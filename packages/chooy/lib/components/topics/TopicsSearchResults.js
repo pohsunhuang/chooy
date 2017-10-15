@@ -37,7 +37,3 @@ const options = {
 }
 
 registerComponent('TopicsSearchResults', TopicsSearchResults, [withList, options]);
-
-export default withList(options)(TopicsSearchResults);
-
-

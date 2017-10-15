@@ -48,5 +48,3 @@ const options = {
 }
 
 registerComponent('TopicsList', TopicsList, [withList, options], withCurrentUser);
-
-export default withList(options)(withCurrentUser(TopicsList));
