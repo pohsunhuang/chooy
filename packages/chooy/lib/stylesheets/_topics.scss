@@ -1,0 +1,225 @@
+//////////////////////////////////////////////////////
+// Topics Search                                    //
+//////////////////////////////////////////////////////
+
+.topics-search-form{
+  position: relative;
+  width: 100%;
+  margin-bottom: 2.5*$spacing;
+}
+
+.topics-search-input{
+  -webkit-appearance: none;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  padding: 1rem;
+  border-radius: 0.5px;
+  border: none;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
+  &:focus{
+    outline: none;
+    box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(0, 0, 0, 0.08);
+  }
+  @include input-text;
+  font-weight: 900;
+}
+
+.auto-complete{
+  position: absolute;
+  background: $white;
+  top: cal(100% - 1);
+  width: 100%;
+  outline: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.2);
+  z-index: 990;//bootstrap dropdown z-index is 990
+}
+
+.auto-complete-item, .auto-complete-item:hover{
+  display: block;
+  padding: 1rem;
+  border-bottom: 1px solid $light-grey;
+  text-decoration: none;
+  color: $normal-text;
+  cursor: default;
+  &:last-child{
+    border-bottom: 0;
+  }
+  &.active{
+    text-decoration: none;
+    color: $hover-text;
+    background: $light-grey;
+  }
+  @include input-text;  
+}
+
+.topics-search-button{
+  position: absolute;
+  background: none;
+  color: $medium-grey;
+  border: none;
+  margin: 0;
+  padding: 1rem;
+  right: 0%;
+  top: 0%;
+  &:hover, &:focus, &:active, &:active:hover, &:active:focus{
+    background: none;
+    outline:none;
+    color: $dark-grey;
+  }
+  @include input-text;
+}
+
+//////////////////////////////////////////////////////
+// Topics List                                      //
+//////////////////////////////////////////////////////
+
+.topics-list{
+
+}
+
+.topics-trend-list{
+
+}
+
+.full-width-wrapper{
+  margin-left: -$spacing;
+  margin-right: -$spacing;
+}
+
+.topics-slider{
+  display: flex;
+  display: -webkit-flex;
+  flex-direction: row;
+  -webkit-flex-direction: row;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  padding: 0 $spacing*0.75;
+  &::-webkit-scrollbar{
+    display: none;
+  }
+  @include medium-large{
+    display: none;
+  }
+}
+
+.topics-carousel{
+  padding: 0 $spacing*0.75;
+  .carousel-inner{
+    >.item{
+      transition: left 200ms ease-in-out;
+    }
+    .active.left, .prev{
+      left: -33%;
+    }
+    .active.right, .next{
+      left: 33%;
+    }
+    @media all and (transform-3d), (-webkit-transform-3d){
+      >.item{
+        transition: left 200ms ease-in-out;
+        transform: none !important;
+      }
+    }
+  }
+  .carousel-control{
+    &.left{
+      left: -$spacing/4;
+    }
+    &.right{
+      right: -$spacing/4;
+    }
+    &.left, &.right{
+      top: calc((100% - 24px)/2);
+      width: auto;
+      height: 24px;
+      background-image: none;
+    }
+  }  
+  @include small{
+    display: none;
+  }  
+}
+
+.topics-carousel-item{
+  display: flex;
+  display: -webkit-flex;
+}
+
+.topics-item-wrapper{
+  flex: 0 0 auto;
+  -webkit-flex: 0 0 auto;
+  width: 66%;
+  max-width: 300px;
+  padding: 0 $spacing/4;
+  background: white;
+  @include input-text;
+  @include medium-large{
+    width: calc(100%/3);
+  }
+}
+
+.topics-item-image{
+  img{
+    display: block;
+    width: 100%;
+  } 
+}
+
+.topics-item-content{
+  &:hover{
+    text-decoration: none;
+    color: $hover-text;
+  }  
+}
+
+.topics-item-name{
+  font-weight: 900;
+  text-transform: capitalize;
+  color: $normal-text;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 8px;
+}
+
+//////////////////////////////////////////////////////
+// Topics Search Results                            //
+//////////////////////////////////////////////////////
+
+.topics-search-result-wrapper{
+  @include flex-center;
+  width: 100%;
+  margin-bottom: 0.5*$spacing;
+  outline: 1px solid rgba(0, 0, 0, 0.2);
+  @include input-text;
+}
+
+.topics-search-result-image{
+  width: 20%;
+  min-width: 20%;
+  margin-right: 0.5*$spacing;
+  img{
+    width: 100%;
+  }
+}
+
+.topics-search-result-content{
+  width:calc(80% - 0.5*#{$spacing});
+  &:hover{
+    text-decoration: none;
+    color: $hover-text;
+  }
+}
+
+.topics-search-result-name{
+  font-weight: 900;
+  text-transform: capitalize;
+  color: $normal-text;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.topics-pagination{
+  margin-top: $spacing;
+}

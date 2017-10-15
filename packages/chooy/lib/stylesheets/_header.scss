@@ -1,0 +1,58 @@
+.chooy-navbar{
+  background: transparent;
+  border: none;
+  .container{
+    width: 100%;
+    margin: 0 0;
+    padding: 10px 20px;
+  }
+}
+
+.chooy-navbar-toggle{
+  &:focus, &:hover{
+    background-color: transparent !important;
+  }
+}
+
+.logo{
+  display: inline-block;
+  height: 50px;
+  width: 60px;
+  padding: 9px 9px 9px 17px;
+}
+
+.logo-box{
+  stroke: $main-color;
+  stroke-width: 20;
+}
+
+.logo-check{
+  stroke: #808F86;
+  stroke-width: 7.5;
+}
+
+.users-account-menu{
+	.dropdown-toggle{
+		@include flex-center;
+		background: none;
+		padding: 0;
+	}	
+}
+
+.accounts-ui{
+	min-width: 240px;
+	padding: $spacing;
+	.buttons{
+		.btn{
+			display: block;
+			width: 100%;
+			text-align: center;
+			margin-bottom: $spacing;
+		}
+	}
+	a{
+		display: block;
+		width: 100%;
+		text-align: center;
+	}
+}

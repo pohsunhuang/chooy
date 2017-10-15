@@ -1,0 +1,14 @@
+<svg xmlns='http://www.w3.org/2000/svg' style='display: none;'>
+  <symbol id='icon-chooy' stroke='#808F86' viewBox='0 0 100 100' role='presentation' aria-hidden='true' focusable='false'>
+  	<path stroke-width='20' d="M0 0 L0 100 M0 100 L100 100 M0 0 L100 0 M100 0 L100 30.9038 M100 100 L100 69.0962"/>
+    <path stroke-width='7.5' d="M22.1 48.4886 L45.4076 71.7962 M42.7076 69.0962 L80.9 30.9038"/>
+  </symbol>
+
+  <symbol id='icon-next' viewBox="0 0 18 18" role="img" aria-label="next" focusable="false" style="display: block; fill: rgb(122, 122, 122); height: 24px; width: 24px;">
+  	<path fill-rule="evenodd" d="M4.293 1.707A1 1 0 1 1 5.708.293l7.995 8a1 1 0 0 1 0 1.414l-7.995 8a1 1 0 1 1-1.415-1.414L11.583 9l-7.29-7.293z"/>
+  </symbol>
+
+  <symbol id='icon-prev' viewBox="0 0 18 18" role="img" aria-label="previous" focusable="false" style="display: block; fill: rgb(122, 122, 122); height: 24px; width: 24px;">
+  	<path fill-rule="evenodd" d="M13.703 16.293a1 1 0 1 1-1.415 1.414l-7.995-8a1 1 0 0 1 0-1.414l7.995-8a1 1 0 1 1 1.415 1.414L6.413 9l7.29 7.293z"/>
+  </symbol>
+</svg>
