@@ -1,8 +1,9 @@
 import React from 'react';
 import { Components, registerComponent, withList } from 'meteor/vulcan:core';
 import { FormattedMessage } from 'meteor/vulcan:i18n';
-import Message from '../common/Message';
+import { Link } from 'react-router';
 
+import Message from '../common/Message';
 import Topics from '../../modules/topics/collection';
 
 const itemsPerPage = 2;
@@ -20,8 +21,8 @@ const TopicsSearchResults = ({results = [], loading, totalCount, terms}) => {
       {loading ? <Components.Loading /> :
         <div className={totalCount ? 'information' : 'information pull-left'}>
           {totalCount ?
-            <Message id='topics.create' values={{here: <a href='/'>here</a>}}/> :
-            <Message id='topics.no.result' values={{query: terms.query, here: <a href='/'>here</a>}}/>
+            <Message id='topics.create' values={{here: <Link to='/'>here</Link>}}/> :
+            <Message id='topics.no.result' values={{query: terms.query, here: <Link to='/'>here</Link>}}/>
           }
         </div>
       }
