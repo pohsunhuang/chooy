@@ -256,7 +256,7 @@ const seedData = [
 
 ];
 
-Meteor.startup(function () {
+export const createSeedData = () => {
   if (Users.find().count() === 0) {
     Accounts.createUser({
       username: 'DemoUser',
@@ -279,5 +279,5 @@ Meteor.startup(function () {
         validate: false,
       });
     })
-  }
-});
+  }  
+}
