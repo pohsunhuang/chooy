@@ -22,7 +22,7 @@
   "supportLocales": [
     { "tag": "en-US", "region": "en", "redirectUrl": "http://192.168.1.9:3000"},
     { "tag": "en", "region": "en", "redirectUrl": "http://192.168.1.9:3000"},
-    { "tag": "zh-TW", "region": "en", "redirectUrl": "http://192.168.1.9:3000"},
+    { "tag": "zh-TW", "region": "tw", "redirectUrl": "http://192.168.1.9:9001"},
     { "tag": "zh", "region": "en", "redirectUrl": "http://192.168.1.9:3000"}
   ],
 

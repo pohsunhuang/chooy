@@ -24,7 +24,7 @@ const Message = ({ id, values }) => {
   if(obj && (parts.length >= 2)) {
     return <span>{parts[0]}{obj}{parts[1]}</span>	
   } else {
-    return <span>message</span>;
+    return <span>{message}</span>;
   }
 }
 

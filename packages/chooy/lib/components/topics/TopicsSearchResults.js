@@ -1,6 +1,5 @@
 import React from 'react';
 import { Components, registerComponent, withList } from 'meteor/vulcan:core';
-import { FormattedMessage } from 'meteor/vulcan:i18n';
 import { Link } from 'react-router';
 
 import Message from '../common/Message';
@@ -11,7 +10,7 @@ const itemsPerPage = 2;
 const TopicsSearchResults = ({results = [], loading, totalCount, terms}) => {
   return (
     <div>
-      <h4 className='title title-text'><FormattedMessage id='topics.search.results' /></h4>
+      <h4 className='title title-text'><Message id='topics.search.results' /></h4>
       {loading ? <Components.Loading /> :
         results.map(topic => <Components.TopicsItem key={topic._id} topic={topic} isSearchResult/>)
       }
@@ -21,8 +20,8 @@ const TopicsSearchResults = ({results = [], loading, totalCount, terms}) => {
       {loading ? <Components.Loading /> :
         <div className={totalCount ? 'information' : 'information pull-left'}>
           {totalCount ?
-            <Message id='topics.create' values={{here: <Link to='/'>here</Link>}}/> :
-            <Message id='topics.no.result' values={{query: terms.query, here: <Link to='/'>here</Link>}}/>
+            <Message id='topics.create' values={{here: <Link to='/'><Message id='topics.here'/></Link>}}/> :
+            <Message id='topics.no.result' values={{query: terms.query, here: <Link to='/'><Message id='topics.here'/></Link>}}/>
           }
         </div>
       }

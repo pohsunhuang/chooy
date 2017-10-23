@@ -1,6 +1,6 @@
 import { getSetting, Strings } from 'meteor/vulcan:lib';
 
-export const getI18nMessage = (id, textOnly, values) => {
+export const getI18nMessage = (id) => {
   const messages = Strings[getSetting('locale', 'en')] || {};
   let message = messages[id] || '';
   
