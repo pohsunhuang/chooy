@@ -5,8 +5,7 @@ import Topics from '../modules/topics/collection';
 const seedData = [
   {
     names: ['apple'],
-    locale: 1,
-    description: `It's a fruit. Delicious!`,
+    locale: 'en',
     photos: [
       [
         {
@@ -27,11 +26,12 @@ const seedData = [
         }
       ],
     ],
+    categories: ['fruit', 'food'],
+    tips: [{how: '', why: '', categories: ['all', 'beginner']}, {how: '', why: '', categories: ['all', 'pro']}],
   },
   {
     names: ['phone', 'cell phone', 'cellular phone', 'mobile phone'],
-    locale: 1,
-    description: `You can use it to call somebody.`,
+    locale: 'en',
     photos: [
       [
         {
@@ -52,11 +52,12 @@ const seedData = [
         },
       ],
     ],
+    categories: [],
+    tips: [],    
   },
   {
     names: ['cup'],
-    locale: 1,
-    description: `Container for liquid. You can use it to drink.`,
+    locale: 'en',
     photos: [
       [
         {
@@ -77,11 +78,12 @@ const seedData = [
         },
       ],
     ],
+    categories: [],
+    tips: [],    
   },
   {
     names: ['house'],
-    locale: 1,
-    description: `A building you can live in.`,
+    locale: 'en',
     photos: [
       [
         {
@@ -102,11 +104,12 @@ const seedData = [
         },
       ],
     ],
+    categories: [],
+    tips: [],    
   },
   {
     names: ['job', 'occupation'],
-    locale: 1,
-    description: `Occupation of you`,
+    locale: 'en',
     photos: [
       [
         {
@@ -127,11 +130,12 @@ const seedData = [
         },
       ],
     ],
+    categories: [],
+    tips: [],    
   },
   {
     names: ['hair style', 'hairstyle'],
-    locale: 1,
-    description: `Shape, color, length, the overall looks of your hair.`,
+    locale: 'en',
     photos: [
       [
         {
@@ -152,11 +156,12 @@ const seedData = [
         },
       ],
     ],
+    categories: [],
+    tips: [],    
   },
   {
     names: ['hobby', 'avocation'],
-    locale: 1,
-    description: `Things you like to do at your free time.`,
+    locale: 'en',
     photos: [
       [
         {
@@ -177,11 +182,12 @@ const seedData = [
         },
       ],
     ],
+    categories: [],
+    tips: [],    
   },
   {
     names: ['pineapple'],
-    locale: 1,
-    description: `Yet another fruit.`,
+    locale: 'en',
     photos: [
       [
         {
@@ -202,11 +208,12 @@ const seedData = [
         },
       ],
     ],
+    categories: [],
+    tips: [],    
   },
   {
     names: ['apple'],
-    locale: 2,
-    description: `Same fruit for another region.`,
+    locale: 'tw',
     photos: [
       [
         {
@@ -227,11 +234,12 @@ const seedData = [
         },
       ],
     ],
+    categories: [],
+    tips: [],    
   },
   {
     names: ['Computer', 'PC'],
-    locale: 1,
-    description: `Machine which compute lots of things fast.`,
+    locale: 'en',
     photos: [
       [
         {
@@ -252,8 +260,9 @@ const seedData = [
         },
       ],
     ],
+    categories: [],
+    tips: [],
   },  
-
 ];
 
 export const createSeedData = () => {
