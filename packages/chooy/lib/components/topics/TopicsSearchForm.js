@@ -111,7 +111,6 @@ class TopicsSearchForm extends Component {
           <input
             className='topics-search-input'
             placeholder={getI18nMessage('topics.search')}
-            autoComplete='off' 
             value={this.state.inputValue} 
             onChange={this.onInputChange}
             onBlur={this.hideAutoComplete}
