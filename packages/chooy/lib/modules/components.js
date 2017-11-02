@@ -15,9 +15,13 @@ import '../components/topics/TopicsPage';
 */
 import '../components/users/UsersAccountMenu';
 
+/*
+  Common
+*/
 import '../components/common/Header';
 import '../components/common/Home';
 import '../components/common/Footer';
 import '../components/common/Layout';
 import '../components/common/Icons';
 import '../components/common/Message';
+import '../components/common/Chips';
