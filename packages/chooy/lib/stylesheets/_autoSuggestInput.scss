@@ -1,0 +1,66 @@
+.auto-suggest-wrapper {
+  position: relative;
+  width: 100%;
+}
+  
+.auto-suggest-input {
+  -webkit-appearance: none;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  padding: 1rem;
+  border-radius: 0.5px;
+  border: none;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
+  &:focus{
+    outline: none;
+    box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(0, 0, 0, 0.08);
+  }
+  @include input-text;
+  font-weight: 900;
+}
+  
+.auto-suggest {
+  position: absolute;
+  background: $white;
+  top: cal(100% - 1);
+  width: 100%;
+  outline: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.2);
+  z-index: 990;//bootstrap dropdown z-index is 990
+}
+  
+.auto-suggest-item, .auto-suggest-item:hover {
+  display: block;
+  padding: 1rem;
+  border-bottom: 1px solid $light-grey;
+  text-decoration: none;
+  color: $normal-text;
+  cursor: default;
+  &:last-child{
+    border-bottom: 0;
+  }
+  &.active{
+    text-decoration: none;
+    color: $hover-text;
+    background: $light-grey;
+  }
+  @include input-text;  
+}
+  
+.auto-suggest-button {
+  position: absolute;
+  background: none;
+  color: $medium-grey;
+  border: none;
+  margin: 0;
+  height: 100%;
+  right: 0%;
+  top: 0%;
+  &:hover, &:focus, &:active, &:active:hover, &:active:focus{
+    background: none;
+    outline:none;
+    color: $dark-grey;
+  }
+  @include input-text;
+}
