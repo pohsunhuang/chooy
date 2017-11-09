@@ -86,6 +86,7 @@ class TopicsSearchForm extends Component {
   }
 
   onAutoCompleteClick(e) {
+    e.preventDefault();
     if(this.state.selectedTopicIndex > 0) {
       this.updateAutoComplete.cancel();
       this.hideAutoComplete();
