@@ -4,9 +4,13 @@
   flex-wrap: wrap;
   -webkit-flex-wrap: wrap;
   width: 100%;
-  padding: 0 3px;
-  border: 1px solid $light-grey;
-  border-radius: 3px;
+  padding: 0.5rem 1rem 0 1rem;
+  border-radius: 0.5px;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
+  &:focus{
+    outline: none;
+    box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(0, 0, 0, 0.08);
+  }  
 
   &.read-only{
     border: 0;
@@ -16,13 +20,13 @@
 
 .chip {
   display: inline-block;
-  margin: 6px 3px;
-  padding: 6px;
+  margin: 0 6px 0.5rem 0;
+  padding: 0.5rem 6px;
   border-radius: 3px;
   background: $light-grey;
   outline: 0;
+  vertical-align: middle;
   overflow: hidden;
-  overflow-wrap: break-word;
   &:focus {
     background: $main-color;
     color: white;
@@ -32,21 +36,47 @@
     -webkit-flex-grow: 100;
     display: flex;
     display: -webkit-flex;
+    margin: 0 0 0.5rem 0;
+    padding: 0.5rem 0;
     background: transparent;
-    padding: 0;
+    overflow: visible;
   }
 
-  button {
+  .chip-content{
+    display: flex;
+    display: -webkit-flex;
+    align-items: center;
+    -webkit-align-items: center;
+    height: 100%;
+    span{
+      overflow: hidden;
+      overflow-wrap: break-word;
+    }
+  }
+
+  .chip-button {
+    flex-shrink: 0;
+    -webkit-flex-shrink: 0;
     background: transparent;
     outline: 0;
     border: 0;
     padding: 0 0 0 12px;
   }
 
-  input {
-    width: 100%;
-    border: 0;
-    outline: 0;
-    @include input-text;
+  .auto-suggest-wrapper {
+    .auto-suggest-input {
+      outline: 0;
+      border: 0;
+      padding: 0;
+      box-shadow: none;
+    }
+    .auto-suggest {
+      top: calc(100% + 1rem);
+      left: -1rem;
+      width: calc(100% + 2rem);
+    }
+    .auto-suggest-button {
+      padding: 0;
+    }
   }
 }

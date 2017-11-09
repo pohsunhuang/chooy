@@ -2,12 +2,15 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Components } from 'meteor/vulcan:core';
 
+import AutoSuggestInput from './AutoSuggestInput';
+
 class Chips extends Component {
   constructor(props) {
     super(props);
-    this.onInputChange = this.onInputChange.bind(this);
-    this.onInputKeyDown = this.onInputKeyDown.bind(this);    
-    this.hideAutoComplete = this.hideAutoComplete.bind(this);
+    this.onChange = this.onChange.bind(this);
+    this.onInputKeyDown = this.onInputKeyDown.bind(this);
+    this.onClearButtonClick = this.onClearButtonClick.bind(this);
+    this.onSuggestionClick = this.onSuggestionClick.bind(this);
     this.createAddNewChipFunc = this.createAddNewChipFunc.bind(this);
     this.addNewChip = this.addNewChip.bind(this);
     this.createDeleteChipFunc = this.createDeleteChipFunc.bind(this);
@@ -20,15 +23,18 @@ class Chips extends Component {
     this.chips = [];
 
     this.state = {
-      value: '',
       items: props.items || [],
-      suggestions: props.suggestions || [],
-      selectedIndex: 0,
+      value: props.value || '',
     }
   }
 
-  onInputChange(e) {
-    this.setState({ value: e.target.value });
+  onChange(e) {
+    const value = e.target.value;  
+    this.setState(state => ({value: value}));
+    
+    if (this.props.onInputChange){
+      this.props.onInputChange(e);
+    }
   }
 
   onInputKeyDown(e) {
@@ -38,21 +44,26 @@ class Chips extends Component {
         break;
       case 'ArrowLeft':
       case 'Backspace':
-        if ((this.state.value == '') && this.state.items.length) {
+        if ((e.target.value == '') && this.state.items.length) {
           this.chips[this.state.items.length-1].focus();
         }
         break;
       case 'ArrowRight':
-        if ((this.state.value == '') && this.state.items.length) {
+        if ((e.target.value == '') && this.state.items.length) {
           this.chips[0].focus();
         }
         break;
       default:  
     }
-  }  
+  }
 
-  hideAutoComplete() {
-    
+  onClearButtonClick() {
+    this.setState(state => ({ value: '' }));
+    this.input.focus();
+  }
+
+  onSuggestionClick(value) {
+    this.addNewChip(value);
   }
 
   createAddNewChipFunc(value) {
@@ -72,7 +83,7 @@ class Chips extends Component {
           (this.state.items.length < this.props.max)) {
         this.setState(this.createAddNewChipFunc(value));
       } else {
-        this.setState({ value: '' });
+        this.setState(state => ({ value: '' }));
       }
     }
   }
@@ -164,21 +175,26 @@ class Chips extends Component {
                                                onClick={this.onChipClick}
                                                ref={chip => this.chips[idx] = chip}
                                              >
-                                               {item}
-                                               {this.props.readOnly ||
-                                                 <button value={idx} onClick={this.onChipButtonClick}>
-                                                   <Components.Icon name='close'/>
-                                                 </button>
-                                               }
+                                               <div className='chip-content'>
+                                                 <span>{item}</span>
+                                                 {this.props.readOnly ||
+                                                   <button className='chip-button' value={idx} onClick={this.onChipButtonClick}>
+                                                     <Components.Icon name='close'/>
+                                                   </button>
+                                                 }
+                                               </div>
                                             </li>)}
         {this.props.readOnly ||
           <li className='chip chip-input'>
-            <input
+            <AutoSuggestInput
               placeholder={this.props.placeholder}
-              value={this.state.value} 
-              onChange={this.onInputChange}
-              onBlur={this.hideAutoComplete}
-              onKeyDown={this.onInputKeyDown}
+              value={this.state.value}
+              suggestions={this.props.suggestions}
+              onChange={this.onChange}
+              onInputKeyDown={this.onInputKeyDown}
+              onSuggestionClick={this.onSuggestionClick}
+              button={<Components.Icon name='close'/>}
+              onButtonClick={this.onClearButtonClick}
               ref={input => this.input = input}
             />
           </li>
@@ -191,10 +207,19 @@ class Chips extends Component {
 Chips.propTypes = {
   items: PropTypes.array,
   readOnly: PropTypes.bool,
-  suggestions: PropTypes.array,
+  suggestions: PropTypes.arrayOf(PropTypes.string),
   placeholder: PropTypes.string,
   onInputChange: PropTypes.func,
   max: PropTypes.number,
+}
+
+Chips.defaultProps = {
+  items: [],
+  readOnly: false,
+  suggestions: [],
+  placeholder: '',
+  onInputChange: () => {},
+  max: 5,
 }
 
 export default Chips;
