@@ -48,7 +48,7 @@ class TopicsSearchForm extends Component {
 
   onInputKeyDown(e){
     let newSelectedIndex = this.state.selectedTopicIndex;
-    if(this.props.results.length){
+    if(this.state.showAutoComplete && this.props.results.length){
       switch(e.key){
         case 'ArrowUp':
           e.preventDefault();
