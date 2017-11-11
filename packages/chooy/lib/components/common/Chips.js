@@ -7,6 +7,7 @@ import AutoSuggestInput from './AutoSuggestInput';
 class Chips extends Component {
   constructor(props) {
     super(props);
+    this.getValue = this.getValue.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onInputKeyDown = this.onInputKeyDown.bind(this);
     this.onClearButtonClick = this.onClearButtonClick.bind(this);
@@ -28,6 +29,10 @@ class Chips extends Component {
     }
   }
 
+  getValue() {
+    return this.state.items;
+  }
+
   onChange(e) {
     const value = e.target.value;  
     this.setState(state => ({value: value}));
@@ -40,6 +45,7 @@ class Chips extends Component {
   onInputKeyDown(e) {
     switch(e.key) {
       case 'Enter':
+        e.preventDefault();
         this.addNewChip(e.target.value);
         break;
       case 'ArrowLeft':
@@ -195,6 +201,7 @@ class Chips extends Component {
               onSuggestionClick={this.onSuggestionClick}
               button={<Components.Icon name='close'/>}
               onButtonClick={this.onClearButtonClick}
+              onBlur={this.props.onBlur}
               ref={input => this.input = input}
             />
           </li>
@@ -210,6 +217,7 @@ Chips.propTypes = {
   suggestions: PropTypes.arrayOf(PropTypes.string),
   placeholder: PropTypes.string,
   onInputChange: PropTypes.func,
+  onBlur: PropTypes.func,
   max: PropTypes.number,
 }
 
@@ -219,6 +227,7 @@ Chips.defaultProps = {
   suggestions: [],
   placeholder: '',
   onInputChange: () => {},
+  onBlur: () => {},
   max: 5,
 }
 

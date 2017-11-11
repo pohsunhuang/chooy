@@ -1,12 +1,20 @@
 import FormsUpload from 'meteor/vulcan:forms-upload';
+import FormChips from '../../components/form/FormChips';
 
 export const TopicInfo = {
   names: {
     label: 'Names' ,
     type: Array,
+    optional: true,
     viewableBy: ['guests'],
     insertableBy: ['members'],
     editableBy: ['members'],
+    control: FormChips,
+    form: {
+      options: {
+        placeholder: 'topics.enter.name',
+      }
+    },
     searchable: true,
   },
 
@@ -35,11 +43,18 @@ export const TopicInfo = {
   },
 
   categories: {
-    label: 'categories' ,
+    label: 'Categories' ,
     type: Array,
+    optional: true,
     viewableBy: ['guests'],
     insertableBy: ['members'],
     editableBy: ['members'],
+    control: FormChips,
+    form: {
+      options: {
+        placeholder: 'topics.enter.category',
+      }
+    },    
   },
 
   'categories.$': {

@@ -127,6 +127,10 @@ class AutoSuggestInput extends React.Component {
     
   onBlur() {
     this.setState(state => ({showSuggestions: false}));
+
+    if (this.props.onBlur) {
+      this.props.onBlur();
+    }
   }
   
   render() {
@@ -179,6 +183,7 @@ AutoSuggestInput.propTypes = {
   onSuggestionClick: PropTypes.func,
   button: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
   onButtonClick: PropTypes.func,
+  onBlur: PropTypes.func,
 }
 
 AutoSuggestInput.defaultProps = {
@@ -191,6 +196,7 @@ AutoSuggestInput.defaultProps = {
   onSuggestionClick: () => {},
   button: '',
   onButtonClick: () => {},
+  onBlur: () => {},
 }
 
 export default AutoSuggestInput;
