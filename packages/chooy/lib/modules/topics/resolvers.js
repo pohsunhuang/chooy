@@ -8,7 +8,7 @@ const resolvers = {
   ...defaultResolvers,
   list: {
     ...defaultResolvers.list,
-    resolver(root, {terms}, context, info) {
+    async resolver(root, {terms}, context, info) {
       if (terms.query) {
         // get currentUser and Users collection from context
         const { currentUser, Users } = context;
@@ -17,7 +17,7 @@ const resolvers = {
         const collection = context['Topics'];
 
         // get options from terms
-        let {options} = collection.getParameters(terms);
+        let {options} = await collection.getParameters(terms);
         options.skip = terms.offset;
 
         // get selector from terms
@@ -68,7 +68,7 @@ const resolvers = {
 
   total: {
     ...defaultResolvers.total,
-    resolver(root, {terms}, context) {
+    async resolver(root, {terms}, context) {
       if (terms.query) {
         const collection = context['Topics'];
 
@@ -85,6 +85,53 @@ const resolvers = {
       } else {
         return terms.nothingForEmptyQuery ? 0 : defaultResolvers.total.resolver(root, {terms}, context);
       }     
+    }
+  },
+
+  suggestions: {
+    name: `TopicsSuggestions`,
+    async resolver(root, {terms}, context, info) {
+      if (terms.query) {
+        // get collection based on collectionName argument
+        const collection = context['Topics'];
+
+        // get options from terms
+        let {options} = await collection.getParameters(terms);
+
+        // get selector from terms
+        const selector = { categories: { $regex: '^' + terms.query, $options: '-i' } };
+
+        const suggestions = [];
+        const {limit} = options;
+        const re = new RegExp(`^${terms.query}`, 'i');
+
+        // initialize search options
+        options.skip = 0;
+        options.limit = 20;
+
+        while(suggestions.length < limit) {
+          // preform Mongo query
+          const docs = collection.find(selector, options).fetch();
+
+          docs.forEach(doc => doc.categories.forEach(category => {
+            if (re.test(category) && _.indexOf(suggestions, category) === -1) {
+              suggestions.push(category);
+            }
+          }))
+
+          // no more candidates
+          if (docs.length < options.limit) {
+            break;
+          }
+
+          options.skip += options.limit;
+        }
+
+        // reduce suggestions if needed
+        return _.take(suggestions, limit);
+      } else {
+        return [];
+      }
     }
   },
 }
