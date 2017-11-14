@@ -52,7 +52,7 @@ const seedData = [
         },
       ],
     ],
-    categories: [],
+    categories: ['electric equipment', 'electric appliance'],
     tips: [],    
   },
   {
@@ -104,7 +104,7 @@ const seedData = [
         },
       ],
     ],
-    categories: [],
+    categories: ['building', 'architecture'],
     tips: [],    
   },
   {
@@ -208,7 +208,7 @@ const seedData = [
         },
       ],
     ],
-    categories: [],
+    categories: ['fruit', 'food'],
     tips: [],    
   },
   {
@@ -234,7 +234,7 @@ const seedData = [
         },
       ],
     ],
-    categories: [],
+    categories: ['fruit', 'food'],
     tips: [],    
   },
   {
@@ -260,7 +260,7 @@ const seedData = [
         },
       ],
     ],
-    categories: [],
+    categories: ['electric equipment'],
     tips: [],
   },  
 ];
