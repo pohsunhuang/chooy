@@ -49,7 +49,7 @@ export const TopicInfo = {
     viewableBy: ['guests'],
     insertableBy: ['members'],
     editableBy: ['members'],
-    control: FormChips,
+    control: 'FormCategoriesChips',
     form: {
       options: {
         placeholder: 'topics.enter.category',
