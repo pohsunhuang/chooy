@@ -3,6 +3,13 @@ import { addStrings } from 'meteor/vulcan:core';
 addStrings('en', {
   'tagline': 'Make the right choice. Fast and simple.',
   'nav.about': 'About',
+  'choosing.guide': 'choosing guide',
+  'options': 'options',
+  'discussion': 'discussion',
+  'filters': 'filters',
+  'tips': 'tips',
+  'edit': 'edit',
+  'history': 'history',
 
   'topics.search': 'Search',
   'topics.trend': 'Trend',
@@ -18,6 +25,13 @@ addStrings('en', {
 addStrings('tw', {
   'tagline': '做正確的選擇，快又簡單',
   'nav.about': '關於',
+  'choosing.guide': '選擇指南',
+  'options': '選項',
+  'discussion': '討論',
+  'filters': '篩選條件',
+  'tips': '選擇技巧',
+  'edit': '編輯',
+  'history': '歷史',
 
   'topics.search': '搜尋',
   'topics.trend': '趨勢',

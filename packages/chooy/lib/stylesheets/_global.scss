@@ -44,6 +44,7 @@
   span{
     font-family: 'Montserrat', sans-serif;
     color: $section-title-color;
+    text-transform: capitalize;
   }
   margin-bottom: 1.5*$spacing;
 }
@@ -56,6 +57,14 @@
 }
 
 .content-text{
+  font-size: 17px;
+}
+
+.content-title{
+  font-weight: 900;
+}
+
+.label-text {
   font-size: 15px;
 }
 

@@ -27,3 +27,4 @@ import '../components/common/Icons';
 import '../components/common/Message';
 import '../components/common/Chips';
 import '../components/common/AutoSuggestInput';
+import '../components/common/Navbar';
