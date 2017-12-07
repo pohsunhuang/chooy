@@ -1,0 +1,38 @@
+.editor-wrapper {
+  padding: $spacing 0;
+}
+
+.editor-toolbar {
+  margin: 0 -8px 12px -8px;
+
+  & > * + * {
+    margin-left: 6px;
+  }
+}
+
+.editor{
+  border-top: 1px solid $light-grey;
+  border-bottom: 1px solid $light-grey;
+  padding: 1rem 0;
+  @include input-text;
+}
+
+.editor-button-icon {
+  cursor: pointer;
+}
+
+.editor-button-icon {
+  font-size: 18px;
+  color: $section-title-color;
+  &.active {
+    color: $black;
+  }
+  &+span{
+    color: white;
+  }
+}
+
+.asdf{
+  width: 100%;
+  outline: 1px solid grey;
+}
