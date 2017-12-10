@@ -20,6 +20,10 @@ addStrings('en', {
   'topics.no.result': 'We cannot find any topic about "{query}". Try different keywords or you can click {here} to create new topic.',
   'topics.enter.name': 'Enter a name',
   'topics.enter.category': 'Enter a category',
+
+  'editor.add.link': 'Add Link',
+  'editor.enter.url': 'Enter the URL of the link',
+  'editor.enter.link.text': 'Enter the text for the link',
 });
 
 addStrings('tw', {
@@ -42,5 +46,9 @@ addStrings('tw', {
   'topics.no.result': '找不到任何有關"{query}"的主題，嘗試不同的關鍵字，或點擊{here}來建立新主題',
   'topics.enter.name': '輸入一個名稱',
   'topics.enter.category': '輸入一個類別',
+
+  'editor.add.link': '新增連結',
+  'editor.enter.url': '輸入連結的URL',
+  'editor.enter.link.text': '輸入連結的文字敘述',  
 });
 

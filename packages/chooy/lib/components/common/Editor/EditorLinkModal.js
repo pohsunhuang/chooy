@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'react-bootstrap/lib/Modal';
 
+import { getI18nMessage } from '../../../modules/utils';
+
 class EditorLinkModal extends Component {
   constructor(props) {
     super(props);
@@ -54,13 +56,13 @@ class EditorLinkModal extends Component {
         dialogClassName={this.props.dialogClassName}      
       >
         <Modal.Header className='editor-modal-header' closeButton>
-          <Modal.Title>Add Link</Modal.Title>
+          <Modal.Title>{getI18nMessage('editor.add.link')}</Modal.Title>
         </Modal.Header>  
         <Modal.Body>
           <div className='editor-modal-body'>
-            <input placeholder='Enter link URL' value={this.state.url} onChange={this.onChangeURL}/>
-            {!this.props.urlOnly ? <input placeholder='Enter text' value={this.state.text} onChange={this.onChangeText}/> : null}
-            <button onClick={this.onClickButton}>OK</button>
+            <input placeholder={getI18nMessage('editor.enter.url')} value={this.state.url} onChange={this.onChangeURL}/>
+            {!this.props.urlOnly ? <input placeholder={getI18nMessage('editor.enter.link.text')} value={this.state.text} onChange={this.onChangeText}/> : null}
+            <button onClick={this.onClickButton}>{getI18nMessage('editor.add.link')}</button>
           </div>
         </Modal.Body>        
       </Modal>
