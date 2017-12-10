@@ -17,6 +17,10 @@
   @include input-text;
 }
 
+.editor-button {
+  display: inline-block;
+}
+
 .editor-button-icon {
   cursor: pointer;
 }
@@ -32,7 +36,48 @@
   }
 }
 
-.asdf{
-  width: 100%;
-  outline: 1px solid grey;
+.editor-modal-header {
+  .modal-title {
+    font-size: 17px;
+    font-weight: 900;
+    font-family: 'Montserrat', sans-serif;
+    color: $section-title-color;
+    text-transform: capitalize;          
+  }
+
+  button{
+    font-size: 24px;
+  }
+}
+
+.editor-modal-body {
+  & > * {
+    width: 100%;
+  }
+
+  & > * + * {
+    margin-top: $spacing;
+  }
+
+  input {
+    padding: 1rem;
+    border-radius: 0.5px;
+    border: none;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
+    &:focus{
+      outline: none;
+      box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(0, 0, 0, 0.08);
+    }
+    @include input-text;
+    font-weight: 900;    
+  }
+
+  button {
+    padding: 1rem;
+    border-radius: 0.5px;
+    border: none;
+    @include input-text;
+    color: $white;
+    background: $main-color; 
+  }
 }
