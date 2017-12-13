@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 import { Components, registerComponent, withCurrentUser } from 'meteor/vulcan:core';
-import { FormattedMessage } from 'meteor/vulcan:i18n';
 import {Nav, Navbar, NavItem} from 'react-bootstrap';
 
 import Icon from './Icons';
