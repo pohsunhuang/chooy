@@ -4,7 +4,9 @@ import { Components } from 'meteor/vulcan:core';
 import { Editor as SlateEditor } from 'slate-react';
 import { Value } from 'slate';
 
+import EditorSchema from './EditorSchema';
 import EditorLinkModal from './EditorLinkModal';
+import EditorImageModal from './EditorImageModal';
 import Icon from '../Icons';
 
 const DEFAULT_NODE = 'paragraph'
@@ -16,6 +18,7 @@ class Editor extends Component {
     this.state = {
       showLinkModal: false,
       linkModalUrlOnly: false,
+      showImageModal: false,
     }
   }
 
@@ -46,6 +49,92 @@ class Editor extends Component {
         }
     });
   }
+
+  /*
+   * Mark Button
+   */
+
+  hasMark = (type) => {
+    return this.props.value.activeMarks.some(mark => mark.type == type);
+  }
+
+  onMarkClick = (e, type) => {
+    e.preventDefault();
+    const change = this.props.value.change().toggleMark(type);
+    this.props.onChange(change);
+  }
+
+  renderMarkButton = ({type, icon}, idx) => {
+    const isActive = this.hasMark(type);
+    const onClick = e => this.onMarkClick(e, type);
+    const onMouseDown = e => e.preventDefault();
+
+    return (
+      <span key={idx} className="editor-button" onMouseDown={onMouseDown} onClick={onClick}>
+        <Icon className={`editor-button-icon${isActive ? ' active' : ''}`} name={icon}/>
+      </span>
+    );
+  }  
+
+  /*
+   * Block Button 
+   */
+
+  hasBlock = (type) => {
+    return this.props.value.blocks.some(node => node.type == type);
+  }
+
+  onBlockClick = (e, type) => {
+    e.preventDefault();
+    const change = this.props.value.change();
+
+    if (type != 'bulleted-list' && type != 'numbered-list') {
+      const isActive = this.hasBlock(type);
+      const isList = this.hasBlock('list-item')
+
+      if (isList) {
+        change.setBlock(isActive ? DEFAULT_NODE : type)
+              .unwrapBlock('bulleted-list')
+              .unwrapBlock('numbered-list');
+      } else {
+        change.setBlock(isActive ? DEFAULT_NODE : type);
+      }
+    } else {
+      const isList = this.hasBlock('list-item')
+      const isType = this.props.value.blocks.some((block) => {
+        return !!this.props.value.document.getClosest(block.key, parent => parent.type == type)
+      })
+
+      if (isList && isType) {
+        change.setBlock(DEFAULT_NODE)
+              .unwrapBlock('bulleted-list')
+              .unwrapBlock('numbered-list');
+      } else if (isList) {
+        change.unwrapBlock(type == 'bulleted-list' ? 'numbered-list' : 'bulleted-list')
+              .wrapBlock(type);
+      } else {
+        change.setBlock('list-item').wrapBlock(type);
+      }
+    }
+
+    this.props.onChange(change);
+  }
+
+  renderBlockButton = ({type, icon}, idx) => {
+    const isActive = this.hasBlock(type);
+    const onClick = e => this.onBlockClick(e, type);
+    const onMouseDown = e => e.preventDefault();
+
+    return (
+      <span key={idx} className="editor-button" onMouseDown={onMouseDown} onClick={onClick}>
+        <Icon className={`editor-button-icon${isActive ? ' active' : ''}`} name={icon} text={type == 'heading-one' ? '1' : (type == 'heading-two' ? '2' : '')}/>
+      </span>
+    );
+  }
+
+  /*
+   * Link Button 
+   */
 
   wrapLink = (change, href) => {
     change.wrapInline({
@@ -102,80 +191,6 @@ class Editor extends Component {
     this.props.onChange(change);
   }
 
-  hasMark = (type) => {
-    return this.props.value.activeMarks.some(mark => mark.type == type);
-  }
-
-  hasBlock = (type) => {
-    return this.props.value.blocks.some(node => node.type == type);
-  }
-
-  onMarkClick = (e, type) => {
-    e.preventDefault();
-    const change = this.props.value.change().toggleMark(type);
-    this.props.onChange(change);
-  }
-
-  onBlockClick = (e, type) => {
-    e.preventDefault();
-    const change = this.props.value.change();
-
-    if (type != 'bulleted-list' && type != 'numbered-list') {
-      const isActive = this.hasBlock(type);
-      const isList = this.hasBlock('list-item')
-
-      if (isList) {
-        change.setBlock(isActive ? DEFAULT_NODE : type)
-              .unwrapBlock('bulleted-list')
-              .unwrapBlock('numbered-list');
-      } else {
-        change.setBlock(isActive ? DEFAULT_NODE : type);
-      }
-    } else {
-      const isList = this.hasBlock('list-item')
-      const isType = this.props.value.blocks.some((block) => {
-        return !!this.props.value.document.getClosest(block.key, parent => parent.type == type)
-      })
-
-      if (isList && isType) {
-        change.setBlock(DEFAULT_NODE)
-              .unwrapBlock('bulleted-list')
-              .unwrapBlock('numbered-list');
-      } else if (isList) {
-        change.unwrapBlock(type == 'bulleted-list' ? 'numbered-list' : 'bulleted-list')
-              .wrapBlock(type);
-      } else {
-        change.setBlock('list-item').wrapBlock(type);
-      }
-    }
-
-    this.props.onChange(change);
-  }
-
-  renderMarkButton = ({type, icon}, idx) => {
-    const isActive = this.hasMark(type);
-    const onClick = e => this.onMarkClick(e, type);
-    const onMouseDown = e => e.preventDefault();
-
-    return (
-      <span key={idx} className="editor-button" onMouseDown={onMouseDown} onClick={onClick}>
-        <Icon className={`editor-button-icon${isActive ? ' active' : ''}`} name={icon}/>
-      </span>
-    );
-  }
-
-  renderBlockButton = ({type, icon}, idx) => {
-    const isActive = this.hasBlock(type);
-    const onClick = e => this.onBlockClick(e, type);
-    const onMouseDown = e => e.preventDefault();
-
-    return (
-      <span key={idx} className="editor-button" onMouseDown={onMouseDown} onClick={onClick}>
-        <Icon className={`editor-button-icon${isActive ? ' active' : ''}`} name={icon} text={type == 'heading-one' ? '1' : (type == 'heading-two' ? '2' : '')}/>
-      </span>
-    );
-  }
-
   renderLinkButton = () => {
     const isActive = this.hasLinks();
     const onMouseDown = e => e.preventDefault();
@@ -192,6 +207,60 @@ class Editor extends Component {
       </span>
     );
   }
+
+  /*
+   * Image Button 
+   */
+
+  insertImage = (change, src) => {
+    change.insertBlock({
+      type: 'image',
+      isVoid: true,
+      data: { src }
+    });
+  }
+
+  onShowImageModal = () => {
+    this.setState(state => ({showImageModal: true}));
+  }
+
+  onHideImageModal = () => {
+    this.setState(state => ({showImageModal: false}));
+  }
+
+  onSubmitImage = (url) => {
+    if (url) {
+      const change = this.props.value.change();
+      change.call(this.insertImage, url);
+      this.props.onChange(change);
+    }
+
+    this.onHideImageModal();
+  }
+
+  onClickImage = (e) => {
+    e.preventDefault();
+    this.onShowImageModal(true);
+  }
+
+  renderImageButton = () => {
+    const onMouseDown = e => e.preventDefault();
+
+    return (
+      <span className='editor-button' onMouseDown={onMouseDown} onClick={this.onClickImage}>
+        <Icon className={`editor-button-icon`} name='image'/>
+        <EditorImageModal
+          show={this.state.showImageModal}
+          onHide={this.onHideImageModal}
+          onSubmit={this.onSubmitImage}
+        />
+      </span>
+    );
+  }  
+
+  /*
+   * Tool Bar
+   */
 
   renderEditorToolBar = () => {
     const markButtons = [
@@ -214,12 +283,13 @@ class Editor extends Component {
         {markButtons.map((markButton, idx) => this.renderMarkButton(markButton, idx))}
         {blockButtons.map((blockButton, idx) => this.renderBlockButton(blockButton, idx))}
         {this.renderLinkButton()}
+        {this.renderImageButton()}
       </div>
     )
   }
 
   renderNode = (props) => {
-    const { attributes, children, node } = props
+    const { attributes, children, node, isSelected } = props
     switch (node.type) {
       case 'block-quote': return <blockquote {...attributes}>{children}</blockquote>
       case 'bulleted-list': return <ul {...attributes}>{children}</ul>
@@ -228,6 +298,7 @@ class Editor extends Component {
       case 'list-item': return <li {...attributes}>{children}</li>
       case 'numbered-list': return <ol {...attributes}>{children}</ol>
       case 'link': return <a {...attributes} href={node.data.get('href')}>{children}</a>
+      case 'image': return <img src={node.data.get('src')} className={`editor-image${isSelected ? ' active' : ''}`} {...attributes} />
     }
   }
 
@@ -249,6 +320,7 @@ class Editor extends Component {
           <SlateEditor
             value={this.props.value}
             onChange={this.props.onChange}
+            schema={EditorSchema}
             renderNode={this.renderNode}
             renderMark={this.renderMark}
             {...this.props}

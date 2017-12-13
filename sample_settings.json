@@ -15,8 +15,12 @@
     "twitterAccount": "foo",
     "facebookPage": "http://facebook.com/foo",
 
-    "googleAnalyticsId":"123foo"
+    "googleAnalyticsId":"123foo",
 
+    "cloudinary": {
+      "cloudName": "dqajc7tpe",
+      "editorPreset": "mfed0yvx"
+    }
   },
 
   "supportLocales": [
