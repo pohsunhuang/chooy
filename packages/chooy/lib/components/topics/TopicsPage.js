@@ -7,6 +7,7 @@ import { Link } from 'react-router';
 import Topics from '../../modules/topics/collection';
 import Navbar from '../common/Navbar';
 import Chips from '../common/Chips';
+import TipsEditor from './TipsEditor';
 import { getI18nMessage } from '../../modules/utils';
 // <Components.Card key={topic._id} document={topic} collection={Topics} currentUser={currentUser}/>
 
@@ -61,6 +62,7 @@ class TopicsPage extends Component {
             </div>
             <h3 className='content-text content-title'><span>Filters</span></h3>
             <h3 className='content-text content-title'><span>Tips</span></h3>
+            <TipsEditor tips={topic.tips} />
             <h3 className='content-text content-title'><span>Synonyms</span></h3>
             <Chips
               readOnly

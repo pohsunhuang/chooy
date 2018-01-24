@@ -1,0 +1,36 @@
+.tip-editor {
+  &.read-only {
+    padding: 1rem 0;
+    border-top: 1px solid $light-grey;
+
+    .editor-wrapper {
+      padding: 0;
+      margin-bottom: 1rem;
+    }
+
+    .editor {
+      padding: 0;
+      border: none;
+    }
+
+    .chips {
+      display: inline-block;
+      width: auto;
+      margin: 0;
+    }
+
+    .chip {
+      margin: 3px;
+      font-size: 10px;
+    }
+
+    .tip-editor-chips {
+      .tip-editor-icon {
+        color: $medium-grey;
+      }
+      & > span {
+        display: inline-block;
+      }
+    }
+  }
+}
