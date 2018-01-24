@@ -14,12 +14,18 @@ const Icon = ({ name, size, text, className }) => {
       </svg>
     );
   } else {
-    return (
-      <span className='fa-stack'>
-        <i className={`${className} fa fa-fw fa-${name} fa-stack-1x ${name == 'square' ? 'fa-lg' : ''}`} aria-hidden="true"/>
-        <span className='fa-stack-1x'>{text}</span>
-      </span>
-    );
+    if (text) {
+      return (
+        <span className='fa-stack'>
+          <i className={`${className || ''} fa fa-fw fa-${name} fa-stack-1x ${name == 'square' ? 'fa-lg' : ''}`} aria-hidden='true'/>
+          <span className='fa-stack-1x'>{text}</span>
+        </span>
+      );
+    } else {
+      return (
+        <i className={`${className || ''} fa fa-fw fa-${name}`} aria-hidden='true'/>
+      );
+    }  
   }
 }
 
