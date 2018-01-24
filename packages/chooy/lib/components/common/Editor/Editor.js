@@ -1,15 +1,35 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Components } from 'meteor/vulcan:core';
 import { Editor as SlateEditor } from 'slate-react';
-import { Value } from 'slate';
+import { Value, Block, Inline, resetKeyGenerator } from 'slate';
 
-import EditorSchema from './EditorSchema';
+import EditorModal from './EditorModal';
 import EditorLinkModal from './EditorLinkModal';
 import EditorImageModal from './EditorImageModal';
 import Icon from '../Icons';
 
 const DEFAULT_NODE = 'paragraph'
+
+const EMPTY_JSON_VALUE = {
+  document: {
+      nodes: [
+        {
+          kind: 'block',
+          type: 'paragraph',
+          nodes: [
+            {
+              kind: 'text',
+              leaves: [
+                {
+                  text: '',
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+};
 
 class Editor extends Component {
   constructor(props) {
@@ -19,6 +39,7 @@ class Editor extends Component {
       showLinkModal: false,
       linkModalUrlOnly: false,
       showImageModal: false,
+      showMoreModal: false,
     }
   }
 
@@ -28,26 +49,19 @@ class Editor extends Component {
   }
 
   static createEmptyValue = () => {
-    return Value.fromJSON({
-      document: {
-          nodes: [
-            {
-              kind: 'block',
-              type: 'paragraph',
-              nodes: [
-                {
-                  kind: 'text',
-                  leaves: [
-                    {
-                      text: '',
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-    });
+    // Reset global auto increment key generator to create the same DOM from both client and server side
+    // for SSR to work properly
+    // Reference: https://github.com/ianstormtaylor/slate/issues/53
+    resetKeyGenerator();
+    return Value.fromJSON(EMPTY_JSON_VALUE);
+  }
+
+  static createValuefromString = (str) => {
+    // Reset global auto increment key generator to create the same DOM from both client and server side
+    // for SSR to work properly
+    // Reference: https://github.com/ianstormtaylor/slate/issues/53    
+    resetKeyGenerator();
+    return str ? Value.fromJSON(JSON.parse(str)) : Editor.createEmptyValue();
   }
 
   /*
@@ -88,14 +102,14 @@ class Editor extends Component {
     e.preventDefault();
     const change = this.props.value.change();
 
-    if (type != 'bulleted-list' && type != 'numbered-list') {
+    if (type != 'bulleted-list' && type != 'ordered-list') {
       const isActive = this.hasBlock(type);
       const isList = this.hasBlock('list-item')
 
       if (isList) {
         change.setBlock(isActive ? DEFAULT_NODE : type)
               .unwrapBlock('bulleted-list')
-              .unwrapBlock('numbered-list');
+              .unwrapBlock('ordered-list');
       } else {
         change.setBlock(isActive ? DEFAULT_NODE : type);
       }
@@ -108,9 +122,9 @@ class Editor extends Component {
       if (isList && isType) {
         change.setBlock(DEFAULT_NODE)
               .unwrapBlock('bulleted-list')
-              .unwrapBlock('numbered-list');
+              .unwrapBlock('ordered-list');
       } else if (isList) {
-        change.unwrapBlock(type == 'bulleted-list' ? 'numbered-list' : 'bulleted-list')
+        change.unwrapBlock(type == 'bulleted-list' ? 'ordered-list' : 'bulleted-list')
               .wrapBlock(type);
       } else {
         change.setBlock('list-item').wrapBlock(type);
@@ -127,7 +141,7 @@ class Editor extends Component {
 
     return (
       <span key={idx} className="editor-button" onMouseDown={onMouseDown} onClick={onClick}>
-        <Icon className={`editor-button-icon${isActive ? ' active' : ''}`} name={icon} text={type == 'heading-one' ? '1' : (type == 'heading-two' ? '2' : '')}/>
+        <Icon className={`editor-button-icon${isActive ? ' active' : ''}`} name={icon} text={type == 'heading1' ? '1' : (type == 'heading2' ? '2' : '')}/>
       </span>
     );
   }
@@ -259,6 +273,18 @@ class Editor extends Component {
   }  
 
   /*
+   * More
+   */
+
+  onShowMoreModal = () => {
+    this.setState(state => ({showMoreModal: true}));
+  }
+
+  onHideMoreModal = () => {
+    this.setState(state => ({showMoreModal: false}));
+  } 
+
+  /*
    * Tool Bar
    */
 
@@ -266,15 +292,15 @@ class Editor extends Component {
     const markButtons = [
       { type: 'bold', icon: 'bold'},
       { type: 'italic', icon: 'italic'},
-      { type: 'underline', icon: 'underline'},
+      { type: 'underlined', icon: 'underline'},
       { type: 'code', icon: 'code'},
     ];
 
     const blockButtons = [
-      { type: 'heading-one', icon: 'square'},
-      { type: 'heading-two', icon: 'square'},
+      { type: 'heading1', icon: 'square'},
+      { type: 'heading2', icon: 'square'},
       { type: 'block-quote', icon: 'quote-right'},
-      { type: 'numbered-list', icon: 'list-ol'},
+      { type: 'ordered-list', icon: 'list-ol'},
       { type: 'bulleted-list', icon: 'list-ul'},
     ];
 
@@ -293,12 +319,13 @@ class Editor extends Component {
     switch (node.type) {
       case 'block-quote': return <blockquote {...attributes}>{children}</blockquote>
       case 'bulleted-list': return <ul {...attributes}>{children}</ul>
-      case 'heading-one': return <h1 {...attributes}>{children}</h1>
-      case 'heading-two': return <h2 {...attributes}>{children}</h2>
+      case 'heading1': return <h1 {...attributes}>{children}</h1>
+      case 'heading2': return <h2 {...attributes}>{children}</h2>
       case 'list-item': return <li {...attributes}>{children}</li>
-      case 'numbered-list': return <ol {...attributes}>{children}</ol>
+      case 'ordered-list': return <ol {...attributes}>{children}</ol>
       case 'link': return <a {...attributes} href={node.data.get('href')}>{children}</a>
       case 'image': return <img src={node.data.get('src')} className={`editor-image${isSelected ? ' active' : ''}`} {...attributes} />
+      case 'more': return <a {...attributes} href='javascript:void(0)' onClick={this.onShowMoreModal}> {children}</a>
     }
   }
 
@@ -308,24 +335,74 @@ class Editor extends Component {
       case 'bold': return <strong>{children}</strong>
       case 'code': return <code>{children}</code>
       case 'italic': return <em>{children}</em>
-      case 'underline': return <u>{children}</u>
+      case 'underlined': return <u>{children}</u>
+    }
+  }
+
+  validateNode = (node) => {
+    const { readOnly, moreValue } = this.props;
+
+    if (node.kind !== 'document') return;
+
+    const lastNode = node.nodes.last();
+
+    if (!lastNode) return;
+
+    if (readOnly && moreValue) {
+      if (lastNode.type !== 'paragraph') {
+        // Add a paragraph node with 'more' at the end
+        return (change) => {
+          const paragraph = Block.create('paragraph');
+          change.insertNodeByKey(node.key, node.nodes.size, paragraph)
+          const newLastNode = change.value.document.getNode(paragraph.key);
+  
+          const more = Inline.create({type: 'more', nodes: [{ kind: 'text', leaves: [{ kind: 'leaf', text: 'more', marks: []}]}]});
+          change.insertNodeByKey(newLastNode.key, newLastNode.nodes.size, more);
+        }
+      } else {
+        // Add 'more' if last paragraph node doesn't have it
+        if (!lastNode.nodes.some(node => node.type === 'more')) {
+          return (change) => {
+            const more = Inline.create({type: 'more', nodes: [{ kind: 'text', leaves: [{ kind: 'leaf', text: 'more', marks: []}]}]});
+            change.insertNodeByKey(lastNode.key, lastNode.nodes.size, more);
+          }
+        }        
+      }
+    } else {
+      if (lastNode.type === 'image') {
+        return (change) => {
+          const paragraph = Block.create('paragraph');
+          change.insertNodeByKey(node.key, node.nodes.size, paragraph);
+        }
+      }
     }
   }
 
   render() {
+    const { value, moreValue, onChange, readOnly, placeholder } = this.props;
+
     return (
       <div className='editor-wrapper'>
-        {this.props.readOnly ? null : this.renderEditorToolBar()}
+        {readOnly ? null : this.renderEditorToolBar()}
         <div className="editor">
           <SlateEditor
-            value={this.props.value}
-            onChange={this.props.onChange}
-            schema={EditorSchema}
+            placeholder={placeholder}
+            value={value}
+            onChange={onChange}
             renderNode={this.renderNode}
             renderMark={this.renderMark}
-            {...this.props}
+            validateNode={this.validateNode}
+            readOnly={readOnly}
           />
         </div>
+        {(readOnly && moreValue) ? 
+          <EditorModal
+            show={this.state.showMoreModal}
+            onHide={this.onHideMoreModal}
+            value={moreValue}
+            renderNode={this.renderNode}
+            renderMark={this.renderMark}
+        /> : null}
       </div>
     );
   }

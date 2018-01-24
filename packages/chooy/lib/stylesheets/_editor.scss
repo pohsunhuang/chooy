@@ -11,10 +11,12 @@
 }
 
 .editor{
-  border-top: 1px solid $light-grey;
-  border-bottom: 1px solid $light-grey;
   padding: 1rem 0;
   @include input-text;
+
+  .modal-trigger {
+    display: inline-block;
+  }
 }
 
 .editor-button {

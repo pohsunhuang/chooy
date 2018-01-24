@@ -28,6 +28,7 @@ addStrings('en', {
   'editor.remove.image': 'Remove Image',
   'editor.image.dropzone': 'Drop an image here, or click to select image to upload.',
   'editor.uploading': 'Uploading',
+  'editor.more': 'More',
 });
 
 addStrings('tw', {
@@ -57,6 +58,7 @@ addStrings('tw', {
   'editor.add.image': '新增圖片',
   'editor.remove.image': '刪除圖片',
   'editor.image.dropzone': '拖曳一張圖片到這邊，或點擊後選擇要上傳的圖片',
-  'editor.uploading': '上傳中',  
+  'editor.uploading': '上傳中',
+  'editor.more': '更多資訊',
 });
 
