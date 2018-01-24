@@ -27,7 +27,7 @@ const seedData = [
       ],
     ],
     categories: ['fruit', 'food'],
-    tips: [{how: '', why: '', categories: ['all', 'beginner']}, {how: '', why: '', categories: ['all', 'pro']}],
+    tips: [],
   },
   {
     names: ['phone', 'cell phone', 'cellular phone', 'mobile phone'],
@@ -53,7 +53,58 @@ const seedData = [
       ],
     ],
     categories: ['electric equipment', 'electric appliance'],
-    tips: [],    
+    tips: [{
+        how: '{"kind":"value","document":{"kind":"document","data":{},"nodes":[{"kind":"block","type":"paragraph","isVoid":false,"data":{},"nodes":[{"kind":"text","leaves":[{"kind":"leaf","text":"Choose phone with ","marks":[]},{"kind":"leaf","text":"multiple zoom lenses","marks":[{"kind":"mark","type":"bold","data":{}}]}]}]}]}}',
+        why: '{"kind":"value","document":{"kind":"document","data":{},"nodes":[{"kind":"block","type":"paragraph","isVoid":false,"data":{},"nodes":[{"kind":"text","leaves":[{"kind":"leaf","text":"Multiple zoom lenses provide wider zoom range for different photo shooting situation.","marks":[]}]}]},{"kind":"block","type":"paragraph","isVoid":false,"data":{},"nodes":[{"kind":"text","leaves":[{"kind":"leaf","text":"For instance, shooting following things require very different zoom level:","marks":[]}]}]},{"kind":"block","type":"ordered-list","isVoid":false,"data":{},"nodes":[{"kind":"block","type":"list-item","isVoid":false,"data":{},"nodes":[{"kind":"text","leaves":[{"kind":"leaf","text":"Portrait","marks":[]}]}]},{"kind":"block","type":"list-item","isVoid":false,"data":{},"nodes":[{"kind":"text","leaves":[{"kind":"leaf","text":"Landscape","marks":[]}]}]},{"kind":"block","type":"list-item","isVoid":false,"data":{},"nodes":[{"kind":"text","leaves":[{"kind":"leaf","text":"Flower","marks":[]}]}]}]},{"kind":"block","type":"paragraph","isVoid":false,"data":{},"nodes":[{"kind":"text","leaves":[{"kind":"leaf","text":"","marks":[]}]}]}]}}',
+        objectives: ['Photo Shooting'],
+        users: ['Photographer'],
+      }, {
+        how: '{"kind":"value","document":{"kind":"document","data":{},"nodes":[{"kind":"block","type":"paragraph","isVoid":false,"data":{},"nodes":[{"kind":"text","leaves":[{"kind":"leaf","text":"Choose the one with ","marks":[]},{"kind":"leaf","text":"big","marks":[{"kind":"mark","type":"bold","data":{}}]},{"kind":"leaf","text":", adjustable ","marks":[]},{"kind":"leaf","text":"font size","marks":[{"kind":"mark","type":"bold","data":{}}]},{"kind":"leaf","text":".","marks":[]}]}]}]}}',
+        why: '{"kind":"value","document":{"kind":"document","data":{},"nodes":[{"kind":"block","type":"paragraph","isVoid":false,"data":{},"nodes":[{"kind":"text","leaves":[{"kind":"leaf","text":"People with ","marks":[]}]},{"kind":"inline","type":"link","isVoid":false,"data":{"href":"https://en.wikipedia.org/wiki/Presbyopia"},"nodes":[{"kind":"text","leaves":[{"kind":"leaf","text":"Presbyopia","marks":[]}]}]},{"kind":"text","leaves":[{"kind":"leaf","text":" have difficulty reading small text, they require bigger display font.","marks":[]}]}]}]}}',
+        objectives: [],
+        users: ['Elder', 'Presbyopia'],
+      }, {
+        how: '{"kind":"value","document":{"kind":"document","data":{},"nodes":[{"kind":"block","type":"paragraph","isVoid":false,"data":{},"nodes":[{"kind":"text","leaves":[{"kind":"leaf","text":"Choose the one with better ","marks":[]},{"kind":"leaf","text":"shatterproof","marks":[{"kind":"mark","type":"bold","data":{}}]},{"kind":"leaf","text":" capability.","marks":[]}]}]}]}}',
+        why: '{"kind":"value","document":{"kind":"document","data":{},"nodes":[{"kind":"block","type":"paragraph","isVoid":false,"data":{},"nodes":[{"kind":"text","leaves":[{"kind":"leaf","text":"Elders, children and sportsman tend to drop their phone occasionally. Better shatterproof capability ensure longer service life.","marks":[]}]}]}]}}',
+        objectives: ['Jogging', 'Exercising', 'Outdoor Activities'],
+        users: ['Elder', 'Child', 'sportsman', 'jogger'],
+      }, {
+        how: '{"kind":"value","document":{"kind":"document","data":{},"nodes":[{"kind":"block","type":"paragraph","isVoid":false,"data":{},"nodes":[{"kind":"text","leaves":[{"kind":"leaf","text":"Lighter","marks":[{"kind":"mark","type":"bold","data":{}}]},{"kind":"leaf","text":", the better.","marks":[]}]}]}]}}',
+        why: '{"kind":"value","document":{"kind":"document","data":{},"nodes":[{"kind":"block","type":"paragraph","isVoid":false,"data":{},"nodes":[{"kind":"text","leaves":[{"kind":"leaf","text":"Phones are getting bigger and bigger these days, and the weight increased accordingly.","marks":[]}]}]},{"kind":"block","type":"paragraph","isVoid":false,"data":{},"nodes":[{"kind":"text","leaves":[{"kind":"leaf","text":"Lighter phone provides better ","marks":[]},{"kind":"leaf","text":"mobility","marks":[{"kind":"mark","type":"italic","data":{}}]},{"kind":"leaf","text":" and ","marks":[]},{"kind":"leaf","text":"portability","marks":[{"kind":"mark","type":"italic","data":{}}]},{"kind":"leaf","text":".","marks":[]}]}]}]}}',
+        objectives: ['General'],
+        users: ['Everyone'],
+      }, {
+        how: '{"kind":"value","document":{"kind":"document","data":{},"nodes":[{"kind":"block","type":"paragraph","isVoid":false,"data":{},"nodes":[{"kind":"text","leaves":[{"kind":"leaf","text":"Choose proper screen size for your particular usage.","marks":[]}]}]}]}}',
+        why: '{"kind":"value","document":{"kind":"document","data":{},"nodes":[{"kind":"block","type":"paragraph","isVoid":false,"data":{},"nodes":[{"kind":"text","leaves":[{"kind":"leaf","text":"Normally, bigger screen means better user experience, but also heavier and less portable.","marks":[]}]}]}]}}',
+        objectives: ['General'],
+        users: ['Everyone'],
+      }, {
+        how: '{"kind":"value","document":{"kind":"document","data":{},"nodes":[{"kind":"block","type":"paragraph","isVoid":false,"data":{},"nodes":[{"kind":"text","leaves":[{"kind":"leaf","text":"Choose smaller phone.","marks":[]}]}]}]}}',
+        why: '{"kind":"value","document":{"kind":"document","data":{},"nodes":[{"kind":"block","type":"paragraph","isVoid":false,"data":{},"nodes":[{"kind":"text","leaves":[{"kind":"leaf","text":"Salesman sometimes have multiple numbers for different subjects. Smaller phones are usually cheaper and more portable.","marks":[]}]}]}]}}',
+        objectives: ['Portability'],
+        users: ['Salesman', 'Merchant'],
+      }, {
+        how: '{"kind":"value","document":{"kind":"document","data":{},"nodes":[{"kind":"block","type":"paragraph","isVoid":false,"data":{},"nodes":[{"kind":"text","leaves":[{"kind":"leaf","text":"Choose the one with ","marks":[]}]},{"kind":"inline","type":"link","isVoid":false,"data":{"href":"https://en.wikipedia.org/wiki/IP_Code"},"nodes":[{"kind":"text","leaves":[{"kind":"leaf","text":"IP68(dust/water proof)","marks":[]}]}]},{"kind":"text","leaves":[{"kind":"leaf","text":" certification.","marks":[]}]}]}]}}',
+        why: '{"kind":"value","document":{"kind":"document","data":{},"nodes":[{"kind":"block","type":"paragraph","isVoid":false,"data":{},"nodes":[{"kind":"text","leaves":[{"kind":"leaf","text":"Different activities require different level of waterproof and dust proof capability.","marks":[]}]}]},{"kind":"block","type":"paragraph","isVoid":false,"data":{},"nodes":[{"kind":"text","leaves":[{"kind":"leaf","text":"See ","marks":[]}]},{"kind":"inline","type":"link","isVoid":false,"data":{"href":"https://en.wikipedia.org/wiki/IP_Code"},"nodes":[{"kind":"text","leaves":[{"kind":"leaf","text":"here","marks":[]}]}]},{"kind":"text","leaves":[{"kind":"leaf","text":" for more details. ","marks":[]}]}]}]}}',
+        objectives: ['Swim', 'Scuba Dive', 'Surfing'],
+        users: ['Diver', 'Swimmer', 'Surfer'],
+      }, {
+        how: '{"kind":"value","document":{"kind":"document","data":{},"nodes":[{"kind":"block","type":"paragraph","isVoid":false,"data":{},"nodes":[{"kind":"text","leaves":[{"kind":"leaf","text":"Bigger storage capacity for more Apps/Photos/Games","marks":[]}]}]}]}}',
+        why: '',
+        objectives: ['General'],
+        users: ['Everyone'],
+      }, {
+        how: '{"kind":"value","document":{"kind":"document","data":{},"nodes":[{"kind":"block","type":"paragraph","isVoid":false,"data":{},"nodes":[{"kind":"text","leaves":[{"kind":"leaf","text":"At least ","marks":[]},{"kind":"leaf","text":"1G RAM","marks":[{"kind":"mark","type":"bold","data":{}}]},{"kind":"leaf","text":" to run mainstream games smoothly.","marks":[]}]}]}]}}',
+        why: '{"kind":"value","document":{"kind":"document","data":{},"nodes":[{"kind":"block","type":"paragraph","isVoid":false,"data":{},"nodes":[{"kind":"text","leaves":[{"kind":"leaf","text":"More RAM means more computing power to run games with varies visual effect.","marks":[]}]}]}]}}',
+        objectives: ['Gaming'],
+        users: ['Gamer'],
+      }, {
+        how: '{"kind":"value","document":{"kind":"document","data":{},"nodes":[{"kind":"block","type":"paragraph","isVoid":false,"data":{},"nodes":[{"kind":"text","leaves":[{"kind":"leaf","text":"Choose the one with longer battery life.","marks":[]}]}]}]}}',
+        why: '',
+        objectives: ['General', 'Gaming'],
+        users: ['Gamer', 'Everyone'],
+      }
+    ],    
   },
   {
     names: ['cup'],

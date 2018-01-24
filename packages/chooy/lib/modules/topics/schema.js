@@ -76,22 +76,28 @@ export const TopicInfo = {
   'tips.$.how': {
     type: String,
     control: 'textarea',
-    max: 256,
   },
 
   'tips.$.why': {
     type: String,
     control: 'textarea',
-    max: 3000,
   },
   
-  'tips.$.categories': {
+  'tips.$.objectives': {
     type: Array,
   },
 
-  'tips.$.categories.$': {
+  'tips.$.objectives.$': {
     type: String,
-  }
+  },
+
+  'tips.$.users': {
+    type: Array,
+  },
+
+  'tips.$.users.$': {
+    type: String,
+  }  
 };
 
 const schema = {
