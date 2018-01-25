@@ -3,9 +3,14 @@ import { Components, registerComponent, withList } from 'meteor/vulcan:core';
 import { Link } from 'react-router';
 
 import Message from '../common/Message';
+import Pagination from '../common/Pagination';
 import Topics from '../../modules/topics/collection';
 
 const itemsPerPage = 2;
+
+const createGetURLByOffset = (query) => {
+  return (offset) => `/search?query=${query}&offset=${offset}`
+}
 
 const TopicsSearchResults = ({results = [], loading, totalCount, terms}) => {
   return (
@@ -15,7 +20,7 @@ const TopicsSearchResults = ({results = [], loading, totalCount, terms}) => {
         results.map(topic => <Components.TopicsItem key={topic._id} topic={topic} isSearchResult/>)
       }
       {loading ? <Components.Loading /> :
-        <Components.TopicsPagination query={terms.query} offset={terms.offset} totalCount={totalCount} itemsPerPage={itemsPerPage}/>
+        <Pagination offset={terms.offset} totalCount={totalCount} itemsPerPage={itemsPerPage} getURLByOffset={createGetURLByOffset(terms.query)}/>
       }
       {loading ? <Components.Loading /> :
         <div className={totalCount ? 'information' : 'information pull-left'}>
