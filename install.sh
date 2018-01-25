@@ -28,6 +28,7 @@ meteor npm install
 
 # Install non-default packages required by chooy
 meteor npm install --save slate slate-react immutable
+meteor npm install --save qs
 
 # Startup
 meteor npm start
