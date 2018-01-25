@@ -27,7 +27,9 @@ env | grep ROOT
 meteor npm install
 
 # Install non-default packages required by chooy
+## slate related packages
 meteor npm install --save slate slate-react immutable
+## query string parser
 meteor npm install --save qs
 
 # Startup
