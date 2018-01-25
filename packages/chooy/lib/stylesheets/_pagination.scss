@@ -1,0 +1,56 @@
+.chooy-pagination{
+    margin-top: $spacing;
+}
+
+.pagination-list{
+    width: 100%;
+    padding: 0;
+    margin-bottom: $spacing;
+    text-align: center;
+    svg{
+      vertical-align: middle;
+    }
+  }
+  
+  .pagination-list-item{
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    font-weight: 900;
+    a{
+      color: $main-color;
+      text-decoration: none;
+    }
+  }
+  
+  .pagination-list-control{
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    font-weight: 900;
+    fill-color: white;
+  }
+  
+  .pagination-list-ellipsis{
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    font-size: 19px;
+    font-weight: 900;
+    color: $main-color;
+  }
+  
+  .pagination-active-item{
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    font-weight: 900;
+    border: 1px solid grey;
+    border-radius: 16px;
+    background: $main-color;
+    color: white;
+  }
