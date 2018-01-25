@@ -48,19 +48,21 @@ class Editor extends Component {
     onChange: PropTypes.func.isRequired,
   }
 
-  static createEmptyValue = () => {
+  static resetKeyGenerator = () => {
     // Reset global auto increment key generator to create the same DOM from both client and server side
     // for SSR to work properly
     // Reference: https://github.com/ianstormtaylor/slate/issues/53
+    // You must call it before you create any 'Value' for slate editor
+    // But you can only call it once per page because if there are editors at the same page with the same data-key,
+    // the focus behavior of editors go haywire    
     resetKeyGenerator();
+  }
+
+  static createEmptyValue = () => {
     return Value.fromJSON(EMPTY_JSON_VALUE);
   }
 
   static createValuefromString = (str) => {
-    // Reset global auto increment key generator to create the same DOM from both client and server side
-    // for SSR to work properly
-    // Reference: https://github.com/ianstormtaylor/slate/issues/53    
-    resetKeyGenerator();
     return str ? Value.fromJSON(JSON.parse(str)) : Editor.createEmptyValue();
   }
 
