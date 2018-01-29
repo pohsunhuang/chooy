@@ -66,6 +66,26 @@ class Editor extends Component {
     return str ? Value.fromJSON(JSON.parse(str)) : Editor.createEmptyValue();
   }
 
+  static isEmptyValue = (value) => {
+    if (!value) {
+      return false;
+    }
+
+    const { nodes } = value.document;
+
+    if (!!nodes && nodes.size === 1) {
+      const paragraphNode = nodes.get(0);
+      if (!!paragraphNode && paragraphNode.type === 'paragraph' && paragraphNode.nodes.size === 1) {
+        const textNode = paragraphNode.nodes.get(0);
+        if (!!textNode && textNode.kind === 'text' && textNode.text === '') {
+          return true;
+        }
+      }
+    }
+    
+    return false;
+  }
+
   /*
    * Mark Button
    */
@@ -350,7 +370,7 @@ class Editor extends Component {
 
     if (!lastNode) return;
 
-    if (readOnly && moreValue) {
+    if (readOnly && !Editor.isEmptyValue(moreValue)) {
       if (lastNode.type !== 'paragraph') {
         // Add a paragraph node with 'more' at the end
         return (change) => {
