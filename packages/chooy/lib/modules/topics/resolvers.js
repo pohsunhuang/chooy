@@ -68,7 +68,7 @@ const resolvers = {
 
   total: {
     ...defaultResolvers.total,
-    async resolver(root, {terms}, context) {
+    async resolver(root, {terms}, context, info) {
       if (terms.query) {
         const collection = context['Topics'];
 
@@ -83,7 +83,7 @@ const resolvers = {
 
         return collection.find({$or: selectors}).count();
       } else {
-        return terms.nothingForEmptyQuery ? 0 : defaultResolvers.total.resolver(root, {terms}, context);
+        return terms.nothingForEmptyQuery ? 0 : defaultResolvers.total.resolver(root, {terms}, context, info);
       }     
     }
   },
