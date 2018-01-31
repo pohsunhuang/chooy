@@ -14,11 +14,11 @@ const EMPTY_JSON_VALUE = {
   document: {
       nodes: [
         {
-          kind: 'block',
+          object: 'block',
           type: 'paragraph',
           nodes: [
             {
-              kind: 'text',
+              object: 'text',
               leaves: [
                 {
                   text: '',
@@ -77,7 +77,7 @@ class Editor extends Component {
       const paragraphNode = nodes.get(0);
       if (!!paragraphNode && paragraphNode.type === 'paragraph' && paragraphNode.nodes.size === 1) {
         const textNode = paragraphNode.nodes.get(0);
-        if (!!textNode && textNode.kind === 'text' && textNode.text === '') {
+        if (!!textNode && textNode.object === 'text' && textNode.text === '') {
           return true;
         }
       }
@@ -364,7 +364,7 @@ class Editor extends Component {
   validateNode = (node) => {
     const { readOnly, moreValue } = this.props;
 
-    if (node.kind !== 'document') return;
+    if (node.object !== 'document') return;
 
     const lastNode = node.nodes.last();
 
@@ -378,14 +378,14 @@ class Editor extends Component {
           change.insertNodeByKey(node.key, node.nodes.size, paragraph)
           const newLastNode = change.value.document.getNode(paragraph.key);
   
-          const more = Inline.create({type: 'more', nodes: [{ kind: 'text', leaves: [{ kind: 'leaf', text: 'more', marks: []}]}]});
+          const more = Inline.create({type: 'more', nodes: [{ object: 'text', leaves: [{ object: 'leaf', text: 'more', marks: []}]}]});
           change.insertNodeByKey(newLastNode.key, newLastNode.nodes.size, more);
         }
       } else {
         // Add 'more' if last paragraph node doesn't have it
         if (!lastNode.nodes.some(node => node.type === 'more')) {
           return (change) => {
-            const more = Inline.create({type: 'more', nodes: [{ kind: 'text', leaves: [{ kind: 'leaf', text: 'more', marks: []}]}]});
+            const more = Inline.create({type: 'more', nodes: [{ object: 'text', leaves: [{ object: 'leaf', text: 'more', marks: []}]}]});
             change.insertNodeByKey(lastNode.key, lastNode.nodes.size, more);
           }
         }        
