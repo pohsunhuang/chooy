@@ -232,15 +232,17 @@ class Editor extends Component {
     const onMouseDown = e => e.preventDefault();
 
     return (
-      <span className='editor-button' onMouseDown={onMouseDown} onClick={this.onClickLink}>
-        <Icon className={`editor-button-icon${isActive ? ' active' : ''}`} name='link'/>
+      <div className='editor-button'>
+        <span onMouseDown={onMouseDown} onClick={this.onClickLink}>
+          <Icon className={`editor-button-icon${isActive ? ' active' : ''}`} name='link'/>
+        </span>
         <EditorLinkModal
           show={this.state.showLinkModal}
           onHide={this.onHideLinkModal}
           onSubmit={this.onSubmitLink}
           urlOnly={this.state.linkModalUrlOnly}
         />
-      </span>
+      </div>
     );
   }
 
@@ -283,14 +285,16 @@ class Editor extends Component {
     const onMouseDown = e => e.preventDefault();
 
     return (
-      <span className='editor-button' onMouseDown={onMouseDown} onClick={this.onClickImage}>
-        <Icon className={`editor-button-icon`} name='image'/>
+      <div className='editor-button'>
+        <span onMouseDown={onMouseDown} onClick={this.onClickImage}>
+          <Icon className={`editor-button-icon`} name='image'/>
+        </span>
         <EditorImageModal
           show={this.state.showImageModal}
           onHide={this.onHideImageModal}
           onSubmit={this.onSubmitImage}
-        />
-      </span>
+        />      
+      </div>
     );
   }  
 
