@@ -25,10 +25,11 @@ addStrings('en', {
   'editor.enter.url': 'Enter the URL of the link',
   'editor.enter.link.text': 'Enter the text for the link',
   'editor.add.image': 'Add Image',
-  'editor.remove.image': 'Remove Image',
-  'editor.image.dropzone': 'Drop an image here, or click to select image to upload.',
-  'editor.uploading': 'Uploading',
   'editor.more': 'More',
+
+  'remove.image': 'Remove Image',
+  'image.dropzone': 'Drop an image here, or click to select image to upload.',
+  'uploading': 'Uploading',
 });
 
 addStrings('tw', {
@@ -56,9 +57,10 @@ addStrings('tw', {
   'editor.enter.url': '輸入連結的URL',
   'editor.enter.link.text': '輸入連結的文字敘述',
   'editor.add.image': '新增圖片',
-  'editor.remove.image': '刪除圖片',
-  'editor.image.dropzone': '拖曳一張圖片到這邊，或點擊後選擇要上傳的圖片',
-  'editor.uploading': '上傳中',
-  'editor.more': '更多資訊',
+  'editor.more': '更多資訊',  
+
+  'remove.image': '刪除圖片',
+  'image.dropzone': '拖曳一張圖片到這邊，或點擊後選擇要上傳的圖片',
+  'uploading': '上傳中',
 });
 
