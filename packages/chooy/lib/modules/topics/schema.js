@@ -62,7 +62,7 @@ export const TopicInfo = {
   },
   
   tips: {
-    label: 'tips',
+    label: 'Tips',
     type: Array,
     viewableBy: ['guests'],
     insertableBy: ['members'],
