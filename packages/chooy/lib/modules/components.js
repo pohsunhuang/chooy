@@ -27,3 +27,8 @@ import '../components/common/Message';
 import '../components/common/Chips';
 import '../components/common/AutoSuggestInput';
 import '../components/common/Navbar';
+
+/*
+  Form
+*/
+import '../components/form/FormImageUploader';

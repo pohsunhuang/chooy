@@ -23,15 +23,15 @@ export const TopicInfo = {
   },  
   
   photos: {
-    label: 'Photos' ,
+    label: 'Cover Art' ,
     type: Array,
     viewableBy: ['guests'],
     insertableBy: ['members'],
     editableBy: ['members'],
-    control: FormsUpload,
+    control: 'FormImageUploader',
     form: {
       options: {
-        preset: 'n5vxa3no',
+        type: 'cover',
       },
     },
   },
