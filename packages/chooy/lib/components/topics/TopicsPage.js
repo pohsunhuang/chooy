@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 import mapProps from 'recompose/mapProps';
 import { Components, registerComponent, withDocument, withCurrentUser } from 'meteor/vulcan:core';
 import { Link } from 'react-router';
+import qs from 'qs';
 
 import Topics from '../../modules/topics/collection';
 import Navbar from '../common/Navbar';
-import Chips from '../common/Chips';
-import TipsEditor from './TipsEditor';
+import TopicsContent from './TopicsContent';
+import TopicsEditForm from './TopicsEditForm';
 import { getI18nMessage } from '../../modules/utils';
 
 const navItems = [
@@ -17,10 +18,9 @@ const navItems = [
 ];
 
 const subMenuItems = [
-  { name: getI18nMessage('filters'), to: null },
-  { name: getI18nMessage('tips'), to: null },
-  { name: getI18nMessage('edit'), to: null },
-  { name: getI18nMessage('history'), to: null },        
+  { name: getI18nMessage('tips'), to: 'tips' },
+  { name: getI18nMessage('edit'), to: 'edit' },
+  { name: getI18nMessage('history'), to: 'history' },
 ];
 
 class TopicsPage extends Component {
@@ -37,41 +37,62 @@ class TopicsPage extends Component {
     this.setState(state => ({ activeIndex: idx }));
   }
 
+  renderMenu = () => {
+    return (
+      <Navbar
+        navItems={navItems}
+        activeIndex={this.state.activeIndex}
+        onItemClick={this.handleNavItemClick}
+      />
+    );    
+  }
+
+  renderSubMenu = () => {
+    const { pathname } = this.props.location;
+  
+    return (
+      <div className='sub-menu'>
+        {subMenuItems.map((menuItem, idx) => {
+          return (
+            <Link key={idx} className='sub-menu-item' to={`${pathname}?page=${menuItem.to}`}>
+              <span>{menuItem.name}</span>
+            </Link>
+          );
+        })}
+      </div>
+    );
+  }
+
+  renderContent = (topic, location) => {
+    const queryStrQbj = qs.parse(location.search, { ignoreQueryPrefix: true });
+    const page = queryStrQbj.page;
+
+    if(page) {
+      switch(page) {
+        case 'edit':
+          return <TopicsEditForm documentId={this.props.documentId}/>
+        case 'history':
+        case 'tips':
+        default:
+          return <TopicsContent topic={topic} location={location}/>
+      }
+    }
+  
+    return <TopicsContent topic={topic} location={location}/>
+  }
+
   render() {
     const topic = this.props.document;
+    const { location } = this.props;
 
     return (
       <div className='topics-page'>
         {this.props.loading ? <Components.Loading/> :
           <div>
             <h1 className='title title-text'><span>{topic.names[0]}</span></h1>
-            <Navbar
-              navItems={navItems}
-              activeIndex={this.state.activeIndex}
-              onItemClick={this.handleNavItemClick}
-            />
-            <div className='sub-menu'>
-            {subMenuItems.map((menuItem, idx) => {
-              return (
-                <Link key={idx} className='sub-menu-item' to={menuItem.to}>
-                  <span>{menuItem.name}</span>
-                </Link>
-              );
-            })}
-            </div>
-            <h3 className='content-text content-title'><span>Filters</span></h3>
-            <h3 className='content-text content-title'><span>Tips</span></h3>
-            <TipsEditor tips={topic.tips} location={this.props.location}/>
-            <h3 className='content-text content-title'><span>Synonyms</span></h3>
-            <Chips
-              readOnly
-              items={topic.names}
-            />
-            <h3 className='content-text content-title'><span>Categories</span></h3>
-            <Chips
-              readOnly
-              items={topic.categories}
-            />      
+            {this.renderMenu()}
+            {this.renderSubMenu()}
+            {this.renderContent(topic, location)}
           </div>  
         }
       </div>
