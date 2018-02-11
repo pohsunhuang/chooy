@@ -7,9 +7,12 @@ import 'cross-fetch/polyfill';
 import Icon from './Icons';
 import { getI18nMessage } from '../../modules/utils';
 
-const presets = [
-  { type: 'editor', preset: getSetting('cloudinary.editorPreset') },
-  { type: 'cover',  preset: getSetting('cloudinary.editorPreset') },
+const MODE_NORMAL = 0;
+const MODE_URL_ONLY = 1;
+
+const typeInfos = [
+  { type: 'editor', preset: getSetting('cloudinary.editorPreset'), mode: MODE_URL_ONLY },
+  { type: 'cover',  preset: getSetting('cloudinary.coverPreset'), mode: MODE_NORMAL },
 ]
 
 class ImageUploader extends Component {
@@ -23,7 +26,7 @@ class ImageUploader extends Component {
   }
 
   static propTypes = {
-    value: PropTypes.string.isRequired,
+    value: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.object)), PropTypes.string]),
     onChange: PropTypes.func.isRequired,
     type: PropTypes.string.isRequired,
   }
@@ -52,8 +55,8 @@ class ImageUploader extends Component {
     // request body
     const body = new FormData();
     body.append('file', files[0]);
-    const preset = presets.find(preset => preset.type === type);
-    body.append('upload_preset', preset ? preset.preset : presets[0].preset);
+    const typeInfo = typeInfos.find(typeInfo => typeInfo.type === type) || typeInfos[0].preset;
+    body.append('upload_preset', typeInfo.preset);
 
     // post request to cloudinary
     fetch(cloudinaryUrl, {
@@ -62,8 +65,12 @@ class ImageUploader extends Component {
     })
     .then(res => res.json()) // json-ify the readable strem
     .then(body => {
-      // use the https:// url given by cloudinary; or eager property if using transformations
-      const newValue = body.eager ? body.eager[0].secure_url : body.secure_url;
+      let newValue;
+      if (typeInfo.mode === MODE_URL_ONLY) {
+        newValue = body.eager ? body.eager[0].secure_url : body.secure_url;
+      } else {
+        newValue = body.eager ? [body.eager] : body.secure_url;
+      } 
 
       // set the uploading status to false
       this.setState(state => ({uploading: false}));
@@ -82,10 +89,17 @@ class ImageUploader extends Component {
     this.props.onChange('');
   }
 
-  render() {
-    const { preview, uploading } = this.state;
+  getImage = () => {
     const { value } = this.props;
-    const image = value || preview;
+    const { preview } = this.state;
+    const image = (typeof value === 'string') ? value : value[0][0].secure_url;
+
+    return preview || image;
+  }
+
+  render() {
+    const { uploading } = this.state;
+    const image = this.getImage();
 
     return (
       <div className='image-uploader'>
@@ -104,7 +118,7 @@ class ImageUploader extends Component {
           <div className="image-upload-result">
             <div className="uploaded-image">
               <img src={image} />
-              {this.state.uploading ? <div className="image-uploading"><span>{getI18nMessage('uploading')}</span></div> : null}
+              {uploading ? <div className="image-uploading"><span>{getI18nMessage('uploading')}</span></div> : null}
             </div>
             <a href="javascript:void(0)" onClick={this.removeImage}>
               <Icon name='close'/>
