@@ -246,3 +246,23 @@
     text-transform: capitalize;
   }
 }
+
+//////////////////////////////////////////////////////
+// Topics Edit Form                                 //
+//////////////////////////////////////////////////////
+
+.topics-edit-form {
+  .form-group {
+    @include content-text;
+    @include content-title;
+
+    & > label {
+      width: 100%;
+      margin: 20px 0 10px 0;
+    }
+
+    & > div {
+      width: 100%;
+    }
+  }
+}

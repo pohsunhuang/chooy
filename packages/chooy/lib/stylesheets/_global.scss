@@ -56,12 +56,20 @@
   }
 }
 
-.content-text{
+@mixin content-text {
   font-size: 17px;
 }
 
-.content-title{
+.content-text{
+  @include content-text;
+}
+
+@mixin content-title {
   font-weight: 900;
+}
+
+.content-title{
+  @include content-title;
 }
 
 .label-text {
