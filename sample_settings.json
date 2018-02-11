@@ -19,7 +19,8 @@
 
     "cloudinary": {
       "cloudName": "dqajc7tpe",
-      "editorPreset": "mfed0yvx"
+      "editorPreset": "mfed0yvx",
+      "coverPreset": "n5vxa3no"
     }
   },
 
