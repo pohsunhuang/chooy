@@ -253,15 +253,15 @@
 
 .topics-edit-form {
   .form-group {
-    @include content-text;
-    @include content-title;
-
     & > label {
+      @include content-text;
+      @include content-title;      
       width: 100%;
       margin: 20px 0 10px 0;
     }
 
     & > div {
+      @include content-text;      
       width: 100%;
     }
   }
