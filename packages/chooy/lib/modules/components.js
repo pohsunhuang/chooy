@@ -9,6 +9,7 @@ import '../components/topics/TopicsSearchForm';
 import '../components/topics/TopicsSearchResults';
 import '../components/topics/TopicsPage';
 import '../components/topics/FormCategoriesChips';
+import '../components/topics/FormTipsEditor';
 
 /*
   Users

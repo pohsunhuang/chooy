@@ -1,4 +1,3 @@
-import FormsUpload from 'meteor/vulcan:forms-upload';
 import FormChips from '../../components/form/FormChips';
 
 export const TopicInfo = {
@@ -21,7 +20,46 @@ export const TopicInfo = {
   'names.$': {
     type: String,
   },  
+
+  tips: {
+    label: 'Tips',
+    type: Array,
+    viewableBy: ['guests'],
+    insertableBy: ['members'],
+    editableBy: ['members'],
+    control: 'FormTipsEditor',
+  },
+
+  'tips.$': {
+    type: Object,
+  },
+
+  'tips.$.how': {
+    type: String,
+    control: 'textarea',
+  },
+
+  'tips.$.why': {
+    type: String,
+    control: 'textarea',
+  },
   
+  'tips.$.objectives': {
+    type: Array,
+  },
+
+  'tips.$.objectives.$': {
+    type: String,
+  },
+
+  'tips.$.users': {
+    type: Array,
+  },
+
+  'tips.$.users.$': {
+    type: String,
+  },  
+
   photos: {
     label: 'Cover Art' ,
     type: Array,
@@ -59,45 +97,7 @@ export const TopicInfo = {
 
   'categories.$': {
     type: String,
-  },
-  
-  tips: {
-    label: 'Tips',
-    type: Array,
-    viewableBy: ['guests'],
-    insertableBy: ['members'],
-    editableBy: ['members'],
-  },
-
-  'tips.$': {
-    type: Object,
-  },
-
-  'tips.$.how': {
-    type: String,
-    control: 'textarea',
-  },
-
-  'tips.$.why': {
-    type: String,
-    control: 'textarea',
-  },
-  
-  'tips.$.objectives': {
-    type: Array,
-  },
-
-  'tips.$.objectives.$': {
-    type: String,
-  },
-
-  'tips.$.users': {
-    type: Array,
-  },
-
-  'tips.$.users.$': {
-    type: String,
-  }  
+  },  
 };
 
 const schema = {
