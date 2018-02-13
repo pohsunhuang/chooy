@@ -26,15 +26,19 @@ const subMenuItems = [
 class TopicsPage extends Component {
   constructor(props) {
     super(props);
-    this.handleNavItemClick = this.handleNavItemClick.bind(this);
 
     this.state = {
       activeIndex: 0,
     }
   }
 
-  handleNavItemClick(e, idx) {
+  handleNavItemClick = (e, idx) => {
     this.setState(state => ({ activeIndex: idx }));
+  }
+
+  handleEditSuccess = () => {
+    const { router, location } = this.props;
+    router.push(`${location.pathname}?page=tips`);
   }
 
   renderMenu = () => {
@@ -70,7 +74,7 @@ class TopicsPage extends Component {
     if(page) {
       switch(page) {
         case 'edit':
-          return <TopicsEditForm documentId={this.props.documentId}/>
+          return <TopicsEditForm documentId={this.props.documentId} successCallback={this.handleEditSuccess}/>
         case 'history':
         case 'tips':
         default:

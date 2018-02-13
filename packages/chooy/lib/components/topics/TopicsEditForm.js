@@ -4,21 +4,22 @@ import { Components } from 'meteor/vulcan:core';
 
 import Topics from '../../modules/topics/collection';
 
-const TopicsEditForm = ({ documentId }) => {
+const TopicsEditForm = ({ documentId, successCallback }) => {
   return (
     <div className='topics-edit-form'>
       <Components.SmartForm 
         collection={Topics}
         documentId={documentId}
         showRemove={true}
-        successCallback={() => {}}
+        successCallback={successCallback}
       />
     </div>
   );
 }
 
 TopicsEditForm.propTypes = {
-  
+  documentId: PropTypes.string.isRequired,
+  successCallback: PropTypes.func.isRequired,
 }
 
 export default TopicsEditForm;
