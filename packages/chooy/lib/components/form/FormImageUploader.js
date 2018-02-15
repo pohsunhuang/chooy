@@ -14,11 +14,14 @@ class ImageUploaderWrapper extends Component {
     }
   }
 
-  onChange = (value) => {
-    this.setState(state => ({value}));
+  static contextTypes = {
+    addToAutofilledValues: PropTypes.func,
   }
 
-  getValue = () => this.state.value;
+  onChange = (value) => {
+    this.setState(state => ({value}))
+    this.context.addToAutofilledValues({[this.props.name]: this.state.value || []});
+  }
 
   render() {
     const { value } = this.state;
@@ -44,13 +47,13 @@ class FormImageUploader extends Component {
   }
 
   render() {
-    const { refFunction, value, label, options, ...props } = this.props;
+    const { value, label, options, name, ...props } = this.props;
 
     return (
       <div className="form-group row">
         <label className="control-label col-sm-3">{label}</label>
         <div className="col-sm-9">  
-          <ImageUploaderWrapper value={value} ref={refFunction} type={options.type} {...props}/>
+          <ImageUploaderWrapper name={name} value={value} type={options.type} {...props}/>
         </div>  
       </div>      
     );
