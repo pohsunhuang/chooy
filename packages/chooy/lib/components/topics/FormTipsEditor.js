@@ -22,7 +22,6 @@ class FormTipsEditor extends Component {
 
   render() {
     const { refFunction, value, label, ...props } = this.props;
-    const { location } = this.context.router;
 
     return (
       <div className="form-group row">
@@ -30,7 +29,6 @@ class FormTipsEditor extends Component {
         <div className="col-sm-9">  
           <TipsEditor
             tips={value}
-            location={location}
             ref={refFunction}
             {...props}
           />

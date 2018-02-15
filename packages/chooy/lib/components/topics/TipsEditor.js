@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router';
 import qs from 'qs';
 
 import TipEditor from './TipEditor';
@@ -23,11 +24,10 @@ class TipsEditor extends Component {
 
   static propTypes = {
     tips: PropTypes.arrayOf(PropTypes.object).isRequired,
-    location: PropTypes.object.isRequired,
   }
 
   getURLByOffset = (offset) => {
-    const { pathname, search } = this.props.location;
+    const { pathname, search } = this.props.router.location;
     let queryStringObj = qs.parse(search, { ignoreQueryPrefix: true });
 
     queryStringObj.offset = offset;
@@ -37,7 +37,7 @@ class TipsEditor extends Component {
 
   render() {
     const { tips } = this.props;
-    const { offset = 0 } = this.props.location.query;
+    const { offset = 0 } = this.props.router.location.query;
 
     return (
       <div className='tips-editor'>
@@ -58,4 +58,4 @@ class TipsEditor extends Component {
   }
 }
 
-export default TipsEditor;
+export default withRouter(TipsEditor);

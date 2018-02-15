@@ -78,7 +78,7 @@ class TopicsPage extends Component {
         case 'history':
         case 'tips':
         default:
-          return <TopicsContent topic={topic} location={location}/>
+          return <TopicsContent topic={topic}/>
       }
     }
   

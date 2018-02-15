@@ -4,11 +4,11 @@ import PropTypes from 'prop-types';
 import TipsEditor from './TipsEditor';
 import Chips from '../common/Chips';
 
-const TopicsContent = ({ topic, location }) => {
+const TopicsContent = ({ topic }) => {
   return (
     <div className='topics-content'>
       <h3 className='content-text content-title'><span>Tips</span></h3>
-      <TipsEditor tips={topic.tips} location={location}/>
+      <TipsEditor tips={topic.tips}/>
       
       <h3 className='content-text content-title'><span>Synonyms</span></h3>
       <Chips readOnly items={topic.names}/>
@@ -21,7 +21,6 @@ const TopicsContent = ({ topic, location }) => {
 
 TopicsContent.propTypes = {
   topic: PropTypes.object.isRequired,  
-  location: PropTypes.object.isRequired,
 }
 
 export default TopicsContent;
