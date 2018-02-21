@@ -63,6 +63,7 @@ export const TopicInfo = {
   photos: {
     label: 'Cover Art' ,
     type: Array,
+    optional: true,
     viewableBy: ['guests'],
     insertableBy: ['members'],
     editableBy: ['members'],

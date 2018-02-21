@@ -20,7 +20,7 @@ class ImageUploaderWrapper extends Component {
 
   onChange = (value) => {
     this.setState(state => ({value}))
-    this.context.addToAutofilledValues({[this.props.name]: this.state.value || []});
+    this.context.addToAutofilledValues({[this.props.name]: value || []});
   }
 
   render() {
