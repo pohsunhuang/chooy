@@ -15,6 +15,7 @@ class TipMenuModal extends Component {
     onHide: PropTypes.func.isRequired,
     onClick: PropTypes.func.isRequired,
     tipIndex: PropTypes.number.isRequired,
+    tipsLength: PropTypes.number.isRequired,
   }
 
   createButtonClickHandler = (buttonType) => {
@@ -27,14 +28,34 @@ class TipMenuModal extends Component {
   }
 
   menuItems = [
-    {icon: 'edit',       name: 'Edit', handler: this.createButtonClickHandler('edit')},
-    {icon: 'arrow-up',   name: 'Move to top', handler: this.createButtonClickHandler('moveTop')},
-    {icon: 'arrow-up',   name: 'Move up', handler: this.createButtonClickHandler('moveUp')},
-    {icon: 'arrow-down', name: 'Move down', handler: this.createButtonClickHandler('moveDown')},
-    {icon: 'arrow-down', name: 'Move to bottom', handler: this.createButtonClickHandler('moveBottom')},
-    {icon: 'trash',      name: 'Delete', handler: this.createButtonClickHandler('delete')},      
-    {icon: 'close',      name: 'Cancel', handler: this.createButtonClickHandler('cancel')},
+    {icon: 'edit',       name: 'edit',           handler: this.createButtonClickHandler('edit')},
+    {icon: 'arrow-up',   name: 'move.to.top',    handler: this.createButtonClickHandler('moveTop')},
+    {icon: 'arrow-up',   name: 'move.up',        handler: this.createButtonClickHandler('moveUp')},
+    {icon: 'arrow-down', name: 'move.down',      handler: this.createButtonClickHandler('moveDown')},
+    {icon: 'arrow-down', name: 'move.to.bottom', handler: this.createButtonClickHandler('moveBottom')},
+    {icon: 'trash',      name: 'remove',         handler: this.createButtonClickHandler('delete')},      
+    {icon: 'close',      name: 'cancel',         handler: this.createButtonClickHandler('cancel')},
   ];
+
+  renderMenuItems = () => {
+    const { tipIndex, tipsLength } = this.props;
+
+    return this.menuItems.map((menuItem, idx) => {
+      if ((menuItem.name === 'move.to.top' && tipIndex === 0) ||
+          (menuItem.name === 'move.up' && tipIndex <= 1) ||
+          (menuItem.name === 'move.down' && tipIndex >= tipsLength - 2) ||
+          (menuItem.name === 'move.to.bottom' && tipIndex === tipsLength - 1)) {
+        return null;
+      } else {
+        return (
+          <button key={idx} className='tip-menu-item' onClick={menuItem.handler}>
+            <Icon className='tip-menu-icon' name={menuItem.icon}/>
+            <span className='tip-menu-item-name'>{getI18nMessage(menuItem.name)}</span>
+          </button>
+        );
+      }
+    });
+  }
 
   render() {
 
@@ -46,14 +67,7 @@ class TipMenuModal extends Component {
         dialogClassName={this.props.dialogClassName}      
       >
         <Modal.Body className='tip-menu-body'>        
-          {this.menuItems.map((menuItem, idx) => {
-            return (
-              <button key={idx} className='tip-menu-item' onClick={menuItem.handler}>
-                <Icon className='tip-menu-icon' name={menuItem.icon}/>
-                <span className='tip-menu-item-name'>{menuItem.name}</span>
-              </button>
-            );
-          })}
+          {this.renderMenuItems()}
         </Modal.Body>        
       </Modal>          
     );

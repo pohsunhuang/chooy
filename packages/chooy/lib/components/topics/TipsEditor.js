@@ -168,7 +168,7 @@ class TipsEditor extends Component {
             <Pagination offset={offset} totalCount={tips.length} itemsPerPage={TIPS_PER_PAGE} getURLByOffset={this.getURLByOffset}/>
           </div>
           : null }
-        <TipMenuModal show={showTipMenu} onHide={this.handleHideTipMenu} onClick={this.handleClickMenuItem} tipIndex={selectedTipIdx}/>
+        <TipMenuModal show={showTipMenu} onHide={this.handleHideTipMenu} onClick={this.handleClickMenuItem} tipIndex={selectedTipIdx} tipsLength={tips.length}/>
       </div>
     );
   }
