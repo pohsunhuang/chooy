@@ -17,7 +17,6 @@ class CategoriesChips extends Component {
     super(props);
     this.updateQuery = debounce(query => this.setState(state => ({ query })), 500);
     this.onInputChange = this.onInputChange.bind(this);
-    this.getValue = this.getValue.bind(this);
 
     this.state = {
       query: '',
@@ -28,10 +27,6 @@ class CategoriesChips extends Component {
     const query = e.target.value;
 
     this.updateQuery(query);
-  }
-
-  getValue() {
-    return this.chips ? this.chips.getValue() : [];
   }
 
   componentWillUnmount() {
