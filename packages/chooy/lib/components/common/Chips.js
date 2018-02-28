@@ -12,9 +12,7 @@ class Chips extends Component {
     this.onInputKeyDown = this.onInputKeyDown.bind(this);
     this.onClearButtonClick = this.onClearButtonClick.bind(this);
     this.onSuggestionClick = this.onSuggestionClick.bind(this);
-    this.createAddNewChipFunc = this.createAddNewChipFunc.bind(this);
     this.addNewChip = this.addNewChip.bind(this);
-    this.createDeleteChipFunc = this.createDeleteChipFunc.bind(this);
     this.deleteChip = this.deleteChip.bind(this);
     this.onChipKeyDown = this.onChipKeyDown.bind(this);
     this.onChipClick = this.onChipClick.bind(this);
@@ -24,13 +22,12 @@ class Chips extends Component {
     this.chips = [];
 
     this.state = {
-      items: props.items || [],
-      value: props.value || '',
+      value: '',
     }
   }
 
-  getValue() {
-    return this.state.items;
+  getValue() {console.log('test');
+    return this.props.items;
   }
 
   onChange(e) {
@@ -43,6 +40,8 @@ class Chips extends Component {
   }
 
   onInputKeyDown(e) {
+    const { items } = this.props;
+
     switch(e.key) {
       case 'Enter':
         e.preventDefault();
@@ -50,12 +49,12 @@ class Chips extends Component {
         break;
       case 'ArrowLeft':
       case 'Backspace':
-        if ((e.target.value == '') && this.state.items.length) {
-          this.chips[this.state.items.length-1].focus();
+        if ((e.target.value == '') && items.length) {
+          this.chips[items.length-1].focus();
         }
         break;
       case 'ArrowRight':
-        if ((e.target.value == '') && this.state.items.length) {
+        if ((e.target.value == '') && items.length) {
           this.chips[0].focus();
         }
         break;
@@ -72,53 +71,46 @@ class Chips extends Component {
     this.addNewChip(value);
   }
 
-  createAddNewChipFunc(value) {
-    return state => {
-      return {
-        items: [...state.items, value],
-        value: '',
-      }
-    }
-  }
+  addNewChip(newChip) {
+    const { items, onItemsChange, max } = this.props;
 
-  addNewChip(value) {
     // Check empty  
-    if (value !== '') {
-      // Check duplication & max chip number  
-      if ((_.indexOf(this.state.items, value) == -1) && 
-          (this.state.items.length < this.props.max)) {
-        this.setState(this.createAddNewChipFunc(value));
-      } else {
-        this.setState(state => ({ value: '' }));
-      }
-    }
-  }
+    if (newChip !== '') {
+      this.setState(state => ({value: ''}));
 
-  createDeleteChipFunc(index) {
-    return state => {
-      return {
-        items: state.items.filter((item, idx) => idx !== index),
+      // Check duplication & max chip number  
+      if ((_.indexOf(items, newChip) == -1) && (items.length < max)) {
+        if(onItemsChange) {
+          onItemsChange([...items, newChip]);
+        }
       }
     }
   }
 
   deleteChip(index) {
-    if (index >= 0 && index < this.state.items.length) {
+    const { items, onItemsChange } = this.props;
+
+    if (index >= 0 && index < items.length) {
       // focus other items on delete
       // We must calculate next focused chip index before setState because it is asynchronous  
-      if (this.state.items.length == 1) {
+      if (items.length == 1) {
         this.input.focus();
-      } else if (index == this.state.items.length-1) {
+      } else if (index == items.length-1) {
         this.chips[index-1].focus();
       } else {
         this.chips[index].focus();
       }
-      this.setState(this.createDeleteChipFunc(index));
+      
+      if (onItemsChange) {
+        onItemsChange(items.filter((item, idx) => idx !== index));
+      }
     }
   }
 
   onChipKeyDown(e) {
-    if (!this.props.readOnly) {
+    const { readOnly, items } = this.props;
+
+    if (!readOnly) {
       const chipIndex = e.target.value;  
       switch(e.key) {
         case 'ArrowLeft':
@@ -129,7 +121,7 @@ class Chips extends Component {
           }
           break;
         case 'ArrowRight':
-          if (chipIndex == this.state.items.length-1) {
+          if (chipIndex == items.length-1) {
             this.input.focus();
           } else {
             this.chips[chipIndex+1].focus();
@@ -170,9 +162,12 @@ class Chips extends Component {
   }
 
   render() {
+    const { readOnly, items, placeholder, suggestions, onBlur } = this.props;
+    const { value } = this.state;
+
     return (
-      <ul className={`chips${this.props.readOnly ? ' read-only' : ''}`}>
-        {this.state.items.map((item, idx) => <li 
+      <ul className={`chips${readOnly ? ' read-only' : ''}`}>
+        {items.map((item, idx) => <li 
                                                className='chip' 
                                                tabIndex='-1' 
                                                key={idx}
@@ -183,25 +178,25 @@ class Chips extends Component {
                                              >
                                                <div className='chip-content'>
                                                  <span>{item}</span>
-                                                 {this.props.readOnly ||
+                                                 {readOnly ||
                                                    <button className='chip-button' value={idx} onClick={this.onChipButtonClick}>
                                                      <Components.Icon name='close'/>
                                                    </button>
                                                  }
                                                </div>
                                             </li>)}
-        {this.props.readOnly ||
+        {readOnly ||
           <li className='chip chip-input'>
             <AutoSuggestInput
-              placeholder={this.props.placeholder}
-              value={this.state.value}
-              suggestions={this.props.suggestions}
+              placeholder={placeholder}
+              value={value}
+              suggestions={suggestions}
               onChange={this.onChange}
               onInputKeyDown={this.onInputKeyDown}
               onSuggestionClick={this.onSuggestionClick}
               button={<Components.Icon name='close'/>}
               onButtonClick={this.onClearButtonClick}
-              onBlur={this.props.onBlur}
+              onBlur={onBlur}
               ref={input => this.input = input}
             />
           </li>
@@ -213,6 +208,7 @@ class Chips extends Component {
 
 Chips.propTypes = {
   items: PropTypes.array,
+  onItemsChange:  PropTypes.func,
   readOnly: PropTypes.bool,
   suggestions: PropTypes.arrayOf(PropTypes.string),
   placeholder: PropTypes.string,
