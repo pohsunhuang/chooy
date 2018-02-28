@@ -5,7 +5,7 @@ import Icon from '../common/Icons';
 import Editor from '../common/Editor/Editor';
 import Chips from '../common/Chips';
 
-class TipEditor extends Component {
+class TipItem extends Component {
   constructor(props) {
     super(props);
   }
@@ -76,4 +76,4 @@ class TipEditor extends Component {
   }
 }
 
-export default TipEditor;
+export default TipItem;

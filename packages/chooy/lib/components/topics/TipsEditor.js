@@ -5,7 +5,7 @@ import qs from 'qs';
 import _ from 'lodash';
 import debounce from 'lodash.debounce';
 
-import TipEditor from './TipEditor';
+import TipItem from './TipItem';
 import TipMenuModal from './TipMenuModal';
 import Editor from '../common/Editor/Editor';
 import Pagination from '../common/Pagination';
@@ -154,7 +154,7 @@ class TipsEditor extends Component {
           <div>
             {tips.map((tip, idx) => {
               if (idx >= offset && idx < (offset+TIPS_PER_PAGE)) {
-                return <TipEditor 
+                return <TipItem 
                          key={idx} 
                          tipIndex={idx} 
                          tip={tip} 
