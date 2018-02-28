@@ -8,55 +8,69 @@ import Chips from '../common/Chips';
 class TipEditor extends Component {
   constructor(props) {
     super(props);
-    
-    this.state = {
-      howValue: props.tip ? Editor.createValuefromString(props.tip.how) : Editor.createEmptyValue(),
-      whyValue: props.tip ? Editor.createValuefromString(props.tip.why) : Editor.createEmptyValue(),
-    }
   }
 
   static propTypes = {
+    tipIndex: PropTypes.number,
     tip: PropTypes.object,
     readOnly: PropTypes.bool,
+    onClickEdit: PropTypes.func,
+  }
+
+  static defaultProps = {
+    readOnly: false,
   }
 
   onHowChange = ({ value }) => {
-    this.setState(state => ({ howValue: value }));
   }
 
   onWhyChange = ({ value }) => {
-    this.setState(state => ({ whyValue: value }));
+  }
+
+  onClickEdit = (e) => {
+    if(this.props.onClickEdit) {
+      this.props.onClickEdit(e, this.props.tipIndex);
+    }
+  }
+
+  refFunction = (tip) => {
+    this.tip = tip;
+  }
+
+  scrollTipIntoView = () => {
+    this.tip.scrollIntoView(true);
   }
 
   render() {
     const { readOnly, tip } = this.props;
 
     return (
-    <div className={`tip-editor${readOnly ? ' read-only' : ''}`}>
-        <Editor
-          placeholder='why'
-          value={this.state.howValue}
-          onChange={this.onHowChange}
-          readOnly={readOnly}
-          moreValue={readOnly ? this.state.whyValue: null}
-        />
-        {readOnly ? null :
+      <div className={`tip-editor${readOnly ? ' read-only' : ''}`} ref={this.refFunction}>
+        <div className='tip-editor-content'>
           <Editor
-            placeholder='how'
-            value={this.state.whyValue}
-            onChange={this.onWhyChange}
+            placeholder='why'
+            value={Editor.createValuefromString(tip.how)}
+            onChange={this.onHowChange}
+            readOnly
+            moreValue={Editor.createValuefromString(tip.why)}
           />
-        }
-        {(tip && tip.objectives.length) ? 
-          <div className='tip-editor-chips'>
-            <Icon className='tip-editor-icon' name='star'/>
-            <Chips items={tip.objectives} readOnly={readOnly} />
-          </div> : null}
-        {(tip && tip.users.length) ?
-          <div className='tip-editor-chips'>
-            <Icon className='tip-editor-icon' name='users'/>
-            <Chips items={tip.users} readOnly={readOnly} />
-          </div> : null}
+          {(tip && tip.objectives.length) ? 
+            <div className='tip-editor-chips'>
+              <Icon className='tip-editor-icon' name='star'/>
+              <Chips items={tip.objectives} readOnly/>
+            </div> : null}
+          {(tip && tip.users.length) ?
+            <div className='tip-editor-chips'>
+              <Icon className='tip-editor-icon' name='users'/>
+              <Chips items={tip.users} readOnly/>
+            </div> : null}
+        </div>
+        {!readOnly ? 
+          <div className='tip-editor-more'>
+            <button className='tip-editor-button' onClick={this.onClickEdit}>
+              <Icon className='tip-editor-icon' name='edit'/>
+            </button>
+          </div>: null}
       </div>  
     );
   }

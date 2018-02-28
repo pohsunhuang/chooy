@@ -1,36 +1,86 @@
 .tip-editor {
-  &.read-only {
-    padding: 1rem 0;
-    border-top: 1px solid $light-grey;
+  @include flex-center;
+  padding: 1rem 0;
+  border-top: 1px solid $light-grey;
 
-    .editor-wrapper {
-      padding: 0;
-      margin-bottom: 1rem;
-    }
+  .editor-wrapper {
+    padding: 0;
+    margin-bottom: 1rem;
+  }
 
-    .editor {
+  .editor {
+    padding: 0;
+    border: none;
+  }
+
+  .chips {
+    display: inline-block;
+    width: auto;
+    margin: 0;
+  }
+
+  .chip {
+    margin: 3px;
+    font-size: 10px;
+  }
+
+  .tip-editor-content {
+    display: inline-block;
+    width: calc(100% - 50px);
+  }
+
+  .tip-editor-more {
+    display: inline-block;
+    width: 50px;
+
+    .tip-editor-button {
+      background: transparent;
+      display: block;
       padding: 0;
       border: none;
+      margin-left: auto;
+      line-height: 100%;      
     }
+  }
 
-    .chips {
+  .tip-editor-chips {
+    & > span {
       display: inline-block;
-      width: auto;
-      margin: 0;
     }
+  }
 
-    .chip {
-      margin: 3px;
-      font-size: 10px;
-    }
+  .tip-editor-icon {
+    color: $medium-grey;
+  }  
 
-    .tip-editor-chips {
-      .tip-editor-icon {
-        color: $medium-grey;
-      }
-      & > span {
-        display: inline-block;
-      }
-    }
+  &.read-only {
+    .tip-editor-content {
+      width: 100%;
+    }    
+  }
+}
+
+.tip-menu-body {
+  &.modal-body {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+.tip-menu-item {
+  -webkit-appearance: none;
+  @include flex-center;
+  justify-content: left;
+  -webkit-justify-content: left;
+  min-height: 36px;
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 0 16px;
+  &:hover {
+    background: $hover-color;
+  }
+  .tip-menu-item-name {
+    margin-left: 12px;
   }
 }

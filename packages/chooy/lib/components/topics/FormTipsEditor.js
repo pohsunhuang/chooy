@@ -8,6 +8,15 @@ import { getI18nMessage } from '../../modules/utils';
 class FormTipsEditor extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      value: this.props.value || [],
+    }
+  }
+
+  handleChange = (value) => {
+    this.setState(state => ({value}));
+    this.context.addToAutofilledValues({[this.props.name]: value || []});
   }
 
   /*
@@ -21,7 +30,8 @@ class FormTipsEditor extends Component {
   }
 
   render() {
-    const { refFunction, value, label, ...props } = this.props;
+    const { label } = this.props;
+    const { value } = this.state;
 
     return (
       <div className="form-group row">
@@ -29,8 +39,7 @@ class FormTipsEditor extends Component {
         <div className="col-sm-9">  
           <TipsEditor
             tips={value}
-            ref={refFunction}
-            {...props}
+            onChange={this.handleChange}
           />
         </div>  
       </div>      
