@@ -265,4 +265,32 @@
       width: 100%;
     }
   }
+
+  .form-section {
+    margin-bottom: 86px;
+  }
+
+  .form-submit {
+    @include sticky-footer;
+    max-width: $content-width;
+    margin-left: -$spacing;
+    left: auto;
+    right: auto;
+
+    button {
+      min-width: 20%;
+      @include main-button;
+    }
+
+    .form-cancel {
+      vertical-align: middle;
+      float: right;
+      min-width: 20%;
+      text-align: center;
+      @include inverse-button;
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
 }

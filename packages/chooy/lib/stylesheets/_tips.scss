@@ -1,7 +1,7 @@
 .tip-editor {
   @include flex-center;
   padding: 1rem 0;
-  border-top: 1px solid $light-grey;
+  border-top: 1px solid $input-border-color;
 
   .editor-wrapper {
     padding: 0;
@@ -83,4 +83,60 @@
   .tip-menu-item-name {
     margin-left: 12px;
   }
+}
+
+.tip-edit-guide {
+  font-size: 12px;
+  color: $medium-grey;
+}
+
+.tip-edit-dialog {
+  margin-top: 0;
+  margin-bottom: 0;
+  
+  @include large {
+    width: $content-width;
+  }
+
+  @include small-medium {
+    width: auto;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .modal-content {
+    border-radius: 0;
+    border: none;
+  }
+}
+
+.tip-edit-body {
+  padding: 0;
+  height: 100vh;
+}
+
+.tip-edit-form {
+  padding: 0 15px;
+  height: calc(100vh - 76px);
+  overflow-y: auto;
+  &::-webkit-scrollbar{
+    display: none;
+  }  
+}
+
+.tip-edit-buttons {
+  button {
+    min-width: 20%;
+    &:last-child {
+      float: right;
+    }
+  }
+}
+
+.add-tip-link {
+  display: block;
+  padding: 1rem 0;
+  width: 100%;
+  border-top: 1px solid $input-border-color;
+  @include input-text;
 }

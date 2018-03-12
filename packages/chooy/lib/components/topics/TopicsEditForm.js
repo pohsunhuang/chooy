@@ -10,8 +10,9 @@ const TopicsEditForm = ({ documentId, successCallback }) => {
       <Components.SmartForm 
         collection={Topics}
         documentId={documentId}
-        showRemove={true}
+        showRemove={false}
         successCallback={successCallback}
+        cancelCallback={successCallback}
       />
     </div>
   );

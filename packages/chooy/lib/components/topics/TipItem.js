@@ -21,11 +21,7 @@ class TipItem extends Component {
     readOnly: false,
   }
 
-  onHowChange = ({ value }) => {
-  }
-
-  onWhyChange = ({ value }) => {
-  }
+  handleChange = () => {/* dummy handler */}
 
   onClickEdit = (e) => {
     if(this.props.onClickEdit) {
@@ -50,7 +46,7 @@ class TipItem extends Component {
           <Editor
             placeholder='why'
             value={Editor.createValuefromString(tip.how)}
-            onChange={this.onHowChange}
+            onChange={this.handleChange}
             readOnly
             moreValue={Editor.createValuefromString(tip.why)}
           />

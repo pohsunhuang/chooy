@@ -7,6 +7,7 @@ import debounce from 'lodash.debounce';
 
 import TipItem from './TipItem';
 import TipMenuModal from './TipMenuModal';
+import TipEditModal from './TipEditModal';
 import Editor from '../common/Editor/Editor';
 import Pagination from '../common/Pagination';
 
@@ -33,6 +34,7 @@ class TipsEditor extends Component {
 
     this.state = {
       showTipMenu: false,
+      showTipEditModal: false,
       selectedTipIdx: 0,
       scrollToTipIdx: -1,
     }
@@ -77,6 +79,7 @@ class TipsEditor extends Component {
 
       switch(buttonType) {
         case 'edit':
+          this.setState(state => ({showTipEditModal: true}));
           break;
         case 'moveTop':
           if (tipIndex > 0 && tipIndex < tips.length) {
@@ -128,6 +131,21 @@ class TipsEditor extends Component {
     }
   }
 
+  handleHideTipEditModal = () => {
+    this.setState(state => ({showTipEditModal: false}));
+  }
+
+  handleTipChange = (tip) => {
+    const { tips, onChange, readOnly } = this.props;
+    const { selectedTipIdx } = this.state;
+
+    if (onChange && !readOnly) {
+      let newTips = _.cloneDeep(tips);
+      newTips[selectedTipIdx] = tip;
+      onChange(newTips);
+    }
+  }
+
   getURLByOffset = (offset) => {
     const { pathname, search } = this.props.router.location;
     let queryStringObj = qs.parse(search, { ignoreQueryPrefix: true });
@@ -146,7 +164,7 @@ class TipsEditor extends Component {
   render() {
     const { tips, readOnly } = this.props;
     const { offset = 0 } = this.props.router.location.query;
-    const { showTipMenu, selectedTipIdx } = this.state;
+    const { showTipMenu, showTipEditModal, selectedTipIdx } = this.state;
 
     return (
       <div className='tips-editor'>
@@ -165,10 +183,13 @@ class TipsEditor extends Component {
                 return ;
               }
             })}
+            {!readOnly && <a className='add-tip-link'>Add choosing tip</a>}
             <Pagination offset={offset} totalCount={tips.length} itemsPerPage={TIPS_PER_PAGE} getURLByOffset={this.getURLByOffset}/>
           </div>
           : null }
         <TipMenuModal show={showTipMenu} onHide={this.handleHideTipMenu} onClick={this.handleClickMenuItem} tipIndex={selectedTipIdx} tipsLength={tips.length}/>
+        {selectedTipIdx >= tips.length ? null :
+         <TipEditModal show={showTipEditModal} onHide={this.handleHideTipEditModal} tip={tips[selectedTipIdx]} onChange={this.handleTipChange}/>}
       </div>
     );
   }

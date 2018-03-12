@@ -408,7 +408,7 @@ class Editor extends Component {
     const { value, moreValue, onChange, readOnly, placeholder } = this.props;
 
     return (
-      <div className='editor-wrapper'>
+      <div className={`editor-wrapper${readOnly ? ' read-only' : ''}`}>
         {readOnly ? null : this.renderEditorToolBar()}
         <div className="editor">
           <SlateEditor

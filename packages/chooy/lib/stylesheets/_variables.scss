@@ -1,3 +1,4 @@
+$content-width: 900px;
 
 $spacing: 24px;
 
@@ -10,21 +11,21 @@ $spacing: 24px;
 	-webkit-align-items: center;
 }
 
-$small-break:  744px;
+$small-break:  768px;
 $medium-break: 1024px;
 
 @mixin small(){ // smaller than small-break
-  @media screen and (max-width: $small-break) {
+  @media screen and (max-width: $small-break - 1px) {
     @content;
   }
 }
 @mixin small-medium(){ // smaller than medium-break
-  @media screen and (max-width: $medium-break) {
+  @media screen and (max-width: $medium-break - 1px) {
     @content;
   }
 }
 @mixin medium(){ // between small and medium-break
-  @media screen and (min-width: $small-break) and (max-width: $medium-break) {
+  @media screen and (min-width: $small-break) and (max-width: $medium-break - 1px) {
     @content;
   }
 }

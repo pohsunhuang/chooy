@@ -12,7 +12,7 @@ button:focus, a:focus {
 
 .main{
 	padding: $spacing;
-	max-width: 900px;
+	max-width: $content-width;
 	margin: 0 auto;
 }
 
@@ -66,6 +66,7 @@ button:focus, a:focus {
 
 .content-text{
   @include content-text;
+  color: $normal-text;
 }
 
 @mixin content-title {
@@ -76,8 +77,12 @@ button:focus, a:focus {
   @include content-title;
 }
 
-.label-text {
+@mixin label-text {
   font-size: 15px;
+}
+
+.label-text {
+  @include label-text;
 }
 
 @mixin input-text{
@@ -94,4 +99,61 @@ button:focus, a:focus {
   a{
     color: $main-color;
   }
+}
+
+@mixin input-border {
+  border: 1px solid $input-border-color;
+  border-radius: 2px;
+  &:focus-within {
+    border: 1px solid $main-color;
+  }
+}
+
+@mixin form-button {
+  padding: 1rem;
+  border-radius: 2px;
+  border: 1px solid $main-color;
+  @include input-text;  
+  cursor: pointer;
+}
+
+@mixin main-button {
+  @include form-button;
+  color: $white;
+  background: $main-color;
+  &:hover {
+    background: $main-hover-color;
+  }  
+}
+
+.main-button {
+  @include main-button;
+}
+
+@mixin inverse-button {
+  @include form-button;
+  color: $main-color;
+  background: transparent;
+  &:hover {
+    color: $main-hover-color;
+    border-color: $main-hover-color;
+  }
+}
+
+.inverse-button {
+  @include inverse-button;
+}
+
+@mixin sticky-footer {
+  border-top: 1px solid $input-border-color;
+  padding: 15px;
+  background: white;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;  
+}
+
+.sticky-footer {
+  @include sticky-footer;
 }

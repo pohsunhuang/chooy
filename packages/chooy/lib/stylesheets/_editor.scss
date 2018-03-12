@@ -1,9 +1,13 @@
 .editor-wrapper {
-  padding: $spacing 0;
+  @include input-border;
+  &.read-only {
+    border: none;
+  }
 }
 
 .editor-toolbar {
-  margin: 0 -8px 12px -8px;
+  padding: 2px;
+  border-bottom: 1px solid $input-border-color;
 
   & > * + * {
     margin-left: 6px;
@@ -11,7 +15,7 @@
 }
 
 .editor{
-  padding: 1rem 0;
+  padding: 1rem;
   @include input-text;
 
   .modal-trigger {
