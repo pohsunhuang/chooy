@@ -41,8 +41,8 @@ class TipItem extends Component {
     const { readOnly, tip } = this.props;
 
     return (
-      <div className={`tip-editor${readOnly ? ' read-only' : ''}`} ref={this.refFunction}>
-        <div className='tip-editor-content'>
+      <div className={`tip-item${readOnly ? ' read-only' : ''}`} ref={this.refFunction}>
+        <div className='tip-item-content'>
           <Editor
             placeholder='why'
             value={Editor.createValuefromString(tip.how)}
@@ -51,20 +51,20 @@ class TipItem extends Component {
             moreValue={Editor.createValuefromString(tip.why)}
           />
           {(tip && tip.objectives.length) ? 
-            <div className='tip-editor-chips'>
-              <Icon className='tip-editor-icon' name='star'/>
+            <div className='tip-item-chips'>
+              <Icon className='tip-item-icon' name='star'/>
               <Chips items={tip.objectives} readOnly/>
             </div> : null}
           {(tip && tip.users.length) ?
-            <div className='tip-editor-chips'>
-              <Icon className='tip-editor-icon' name='users'/>
+            <div className='tip-item-chips'>
+              <Icon className='tip-item-icon' name='users'/>
               <Chips items={tip.users} readOnly/>
             </div> : null}
         </div>
         {!readOnly ? 
-          <div className='tip-editor-more'>
-            <button className='tip-editor-button' onClick={this.onClickEdit}>
-              <Icon className='tip-editor-icon' name='edit'/>
+          <div className='tip-item-more'>
+            <button className='tip-item-button' onClick={this.onClickEdit}>
+              <Icon className='tip-item-icon' name='edit'/>
             </button>
           </div>: null}
       </div>  

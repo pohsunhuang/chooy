@@ -1,4 +1,4 @@
-.tip-editor {
+.tip-item {
   @include flex-center;
   padding: 1rem 0;
   border-top: 1px solid $input-border-color;
@@ -24,16 +24,16 @@
     font-size: 10px;
   }
 
-  .tip-editor-content {
+  .tip-item-content {
     display: inline-block;
     width: calc(100% - 50px);
   }
 
-  .tip-editor-more {
+  .tip-item-more {
     display: inline-block;
     width: 50px;
 
-    .tip-editor-button {
+    .tip-item-button {
       background: transparent;
       display: block;
       padding: 0;
@@ -43,18 +43,18 @@
     }
   }
 
-  .tip-editor-chips {
+  .tip-item-chips {
     & > span {
       display: inline-block;
     }
   }
 
-  .tip-editor-icon {
+  .tip-item-icon {
     color: $medium-grey;
   }  
 
   &.read-only {
-    .tip-editor-content {
+    .tip-item-content {
       width: 100%;
     }    
   }
