@@ -3,34 +3,36 @@
 }
 
 .pagination-list{
+    @include flex-center;
     width: 100%;
     padding: 0;
     margin-bottom: $spacing;
     text-align: center;
-    svg{
-      vertical-align: middle;
-    }
   }
   
-  .pagination-list-item{
+  @mixin pagination-list-item {
     display: inline-block;
     width: 30px;
     height: 30px;
     line-height: 30px;
     font-weight: 900;
-    a{
+    @include label-text;
+  }
+
+  .pagination-list-item{
+    @include pagination-list-item;
+    a {
       color: $main-color;
       text-decoration: none;
     }
   }
-  
+
   .pagination-list-control{
-    display: inline-block;
-    width: 30px;
-    height: 30px;
-    line-height: 30px;
-    font-weight: 900;
-    fill-color: white;
+    @include pagination-list-item;
+    @include flex-center;
+    a {
+      @include flex-center;
+    }
   }
   
   .pagination-list-ellipsis{
@@ -44,12 +46,7 @@
   }
   
   .pagination-active-item{
-    display: inline-block;
-    width: 30px;
-    height: 30px;
-    line-height: 30px;
-    font-weight: 900;
-    border: 1px solid grey;
+    @include pagination-list-item;
     border-radius: 16px;
     background: $main-color;
     color: white;
