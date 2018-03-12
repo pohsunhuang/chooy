@@ -26,7 +26,7 @@ class Chips extends Component {
     }
   }
 
-  getValue() {console.log('test');
+  getValue() {
     return this.props.items;
   }
 
@@ -174,6 +174,7 @@ class Chips extends Component {
                                                value={idx}
                                                onKeyDown={this.onChipKeyDown}
                                                onClick={this.onChipClick}
+                                               onBlur={onBlur}
                                                ref={chip => this.chips[idx] = chip}
                                              >
                                                <div className='chip-content'>
