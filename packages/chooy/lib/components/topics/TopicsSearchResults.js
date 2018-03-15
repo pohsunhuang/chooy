@@ -12,6 +12,10 @@ const createGetURLByOffset = (query) => {
   return (offset) => `/search?query=${query}&offset=${offset}`
 }
 
+const createNewTopicURL = (query) => {
+  return `/new_topic/${query}`;
+}
+
 const TopicsSearchResults = ({results = [], loading, totalCount, terms}) => {
   return (
     <div>
@@ -25,8 +29,8 @@ const TopicsSearchResults = ({results = [], loading, totalCount, terms}) => {
       {loading ? <Components.Loading /> :
         <div className={totalCount ? 'information' : 'information pull-left'}>
           {totalCount ?
-            <Message id='topics.create' values={{here: <Link to='/'><Message id='topics.here'/></Link>}}/> :
-            <Message id='topics.no.result' values={{query: terms.query, here: <Link to='/'><Message id='topics.here'/></Link>}}/>
+            <Message id='topics.create' values={{here: <Link to={createNewTopicURL(terms.query)}><Message id='topics.here'/></Link>}}/> :
+            <Message id='topics.no.result' values={{query: terms.query, here: <Link to={createNewTopicURL(terms.query)}><Message id='topics.here'/></Link>}}/>
           }
         </div>
       }

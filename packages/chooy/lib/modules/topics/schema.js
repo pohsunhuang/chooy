@@ -1,4 +1,5 @@
 import FormChips from '../../components/form/FormChips';
+import { getSetting } from 'meteor/vulcan:lib';
 
 export const TopicInfo = {
   names: {
@@ -24,6 +25,7 @@ export const TopicInfo = {
   tips: {
     label: 'Tips',
     type: Array,
+    optional: true,    
     viewableBy: ['guests'],
     insertableBy: ['members'],
     editableBy: ['members'],
@@ -36,16 +38,17 @@ export const TopicInfo = {
 
   'tips.$.how': {
     type: String,
-    control: 'textarea',
+    optional: true,
   },
 
   'tips.$.why': {
     type: String,
-    control: 'textarea',
+    optional: true,
   },
   
   'tips.$.objectives': {
     type: Array,
+    optional: true,
   },
 
   'tips.$.objectives.$': {
@@ -54,6 +57,7 @@ export const TopicInfo = {
 
   'tips.$.users': {
     type: Array,
+    optional: true,
   },
 
   'tips.$.users.$': {
@@ -135,9 +139,11 @@ const schema = {
 
   locale: {
     type: String,
-    optional: false,
+    optional: true,
     viewableBy: ['guests'],
-    //TODO: on insert callback
+    onInsert: () => {
+      return getSetting('locale', 'en');
+    }
   },
 
   ...TopicInfo,

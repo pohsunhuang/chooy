@@ -4,6 +4,7 @@
 */
 import '../components/topics/TopicsItem';
 import '../components/topics/TopicsList';
+import '../components/topics/TopicsNewForm';
 import '../components/topics/TopicsSearch';
 import '../components/topics/TopicsSearchForm';
 import '../components/topics/TopicsSearchResults';
