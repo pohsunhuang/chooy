@@ -8,13 +8,13 @@ const TopicsContent = ({ topic }) => {
   return (
     <div className='topics-content'>
       <h3 className='content-text content-title'><span>Tips</span></h3>
-      <TipsEditor tips={topic.tips} readOnly/>
+      <TipsEditor tips={topic.tips || undefined} readOnly/>
       
       <h3 className='content-text content-title'><span>Synonyms</span></h3>
-      <Chips readOnly items={topic.names}/>
+      <Chips readOnly items={topic.names || undefined}/>
       
       <h3 className='content-text content-title'><span>Categories</span></h3>
-      <Chips readOnly items={topic.categories}/>
+      <Chips readOnly items={topic.categories || undefined}/>
     </div>
   );
 }

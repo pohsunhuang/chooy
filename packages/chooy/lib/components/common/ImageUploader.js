@@ -92,7 +92,7 @@ class ImageUploader extends Component {
   getImage = () => {
     const { value } = this.props;
     const { preview } = this.state;
-    const image = (typeof value === 'string') ? value : value[0][0].secure_url;
+    const image = (typeof value === 'string') ? value : (value.length ? value[0][0].secure_url : '');
 
     return preview || image;
   }
