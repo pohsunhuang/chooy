@@ -139,4 +139,10 @@
   width: 100%;
   border-top: 1px solid $input-border-color;
   @include input-text;
+  cursor: pointer;
+  color: $main-color;
+  &:hover {
+    text-decoration: none;
+    color: $main-color;
+  }
 }

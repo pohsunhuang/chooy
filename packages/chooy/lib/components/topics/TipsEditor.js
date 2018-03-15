@@ -35,18 +35,19 @@ class TipsEditor extends Component {
     this.state = {
       showTipMenu: false,
       showTipEditModal: false,
-      selectedTipIdx: 0,
+      selectedTipIdx: -1,
       scrollToTipIdx: -1,
     }
   }
 
   static propTypes = {
-    tips: PropTypes.arrayOf(PropTypes.object).isRequired,
+    tips: PropTypes.arrayOf(PropTypes.object),
     onChange: PropTypes.func,
     readOnly: PropTypes.bool,
   }
 
   static defaultProps = {
+    tips: [],
     readOnly: false,
   }
 
@@ -66,6 +67,11 @@ class TipsEditor extends Component {
     this.setState(state => ({showTipMenu: true, selectedTipIdx}));
   }
 
+  handleClickAdd = (e) => {
+    e.preventDefault();
+    this.setState(state => ({showTipEditModal: true, selectedTipIdx: -1}));
+  }
+
   handleHideTipMenu = () => {
     this.setState(state => ({showTipMenu: false}));
   }
@@ -74,7 +80,7 @@ class TipsEditor extends Component {
     const { tips, onChange, readOnly } = this.props;
     const { offset = 0 } = this.props.router.location.query;
     
-    if (onChange && !readOnly) {
+    if (onChange && !readOnly && tipIndex >= 0) {
       let newTips = _.cloneDeep(tips);
 
       switch(buttonType) {
@@ -141,7 +147,15 @@ class TipsEditor extends Component {
 
     if (onChange && !readOnly) {
       let newTips = _.cloneDeep(tips);
-      newTips[selectedTipIdx] = tip;
+
+      if (selectedTipIdx >= 0 && selectedTipIdx < tips.length) {
+        newTips[selectedTipIdx] = tip; // Modify Tip
+      } else if (selectedTipIdx === -1) {
+        newTips.push(tip); // Add new Tip
+      } else {
+        return ;
+      }
+
       onChange(newTips);
     }
   }
@@ -158,38 +172,64 @@ class TipsEditor extends Component {
   routeToTip = (tipIndex) => {
     const { router } = this.props;
     const offset = Math.floor(tipIndex / TIPS_PER_PAGE) * TIPS_PER_PAGE;
+    
     router.push(this.getURLByOffset(offset));
+  }
+
+  renderTipList = () => {
+    const { tips, readOnly } = this.props;
+    const { offset = 0 } = this.props.router.location.query;
+    
+    if (!!tips && tips.length) {
+      return tips.map((tip, idx) => {
+        if (idx >= offset && idx < (offset+TIPS_PER_PAGE)) {
+          return <TipItem 
+                   key={idx} 
+                   tipIndex={idx} 
+                   tip={tip} 
+                   readOnly={readOnly} 
+                   onClickEdit={this.handleClickEdit} 
+                   ref={tip => this.tips[idx] = tip}/>
+        } else {
+          return ;
+        }
+      });
+    } else {
+      return null;
+    }
+  }
+
+  renderTipEditModal = () => {
+    const { tips } = this.props;
+    const { showTipEditModal, selectedTipIdx } = this.state;
+
+    if (selectedTipIdx === -1) {
+      // Add new Tip
+      return <TipEditModal show={showTipEditModal} onHide={this.handleHideTipEditModal} onChange={this.handleTipChange}/>
+    } else if (selectedTipIdx >= 0 && selectedTipIdx < tips.length) {
+      // Modify Tip
+      return <TipEditModal show={showTipEditModal} onHide={this.handleHideTipEditModal} tip={tips[selectedTipIdx]} onChange={this.handleTipChange}/>
+    } else {
+      return null;
+    }
   }
 
   render() {
     const { tips, readOnly } = this.props;
     const { offset = 0 } = this.props.router.location.query;
-    const { showTipMenu, showTipEditModal, selectedTipIdx } = this.state;
+    const { showTipMenu, selectedTipIdx } = this.state;
 
     return (
       <div className='tips-editor'>
-        {(!!tips && tips.length) ?
-          <div>
-            {tips.map((tip, idx) => {
-              if (idx >= offset && idx < (offset+TIPS_PER_PAGE)) {
-                return <TipItem 
-                         key={idx} 
-                         tipIndex={idx} 
-                         tip={tip} 
-                         readOnly={readOnly} 
-                         onClickEdit={this.handleClickEdit} 
-                         ref={tip => this.tips[idx] = tip}/>
-              } else {
-                return ;
-              }
-            })}
-            {!readOnly && <a className='add-tip-link'>Add choosing tip</a>}
+        <div>
+          {this.renderTipList()}
+          {!readOnly && <a className='add-tip-link' onClick={this.handleClickAdd}>Add choosing tip</a>}
+          {(!!tips && tips.length) ? 
             <Pagination offset={offset} totalCount={tips.length} itemsPerPage={TIPS_PER_PAGE} getURLByOffset={this.getURLByOffset}/>
-          </div>
-          : null }
+            : null }
+        </div>  
         <TipMenuModal show={showTipMenu} onHide={this.handleHideTipMenu} onClick={this.handleClickMenuItem} tipIndex={selectedTipIdx} tipsLength={tips.length}/>
-        {selectedTipIdx >= tips.length ? null :
-         <TipEditModal show={showTipEditModal} onHide={this.handleHideTipEditModal} tip={tips[selectedTipIdx]} onChange={this.handleTipChange}/>}
+        {this.renderTipEditModal()}
       </div>
     );
   }

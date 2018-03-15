@@ -11,17 +11,17 @@ class TipMenuModal extends Component {
     super(props);
 
     this.state = {
-      howValue: Editor.createValuefromString(props.tip.how),
-      whyValue: Editor.createValuefromString(props.tip.why),
-      objectives: props.tip.objectives,
-      users: props.tip.users,
+      howValue: props.tip ? Editor.createValuefromString(props.tip.how) : Editor.createEmptyValue(),
+      whyValue: props.tip ? Editor.createValuefromString(props.tip.why) : Editor.createEmptyValue(),
+      objectives: props.tip ? props.tip.objectives : [],
+      users: props.tip ? props.tip.users : [],
     }
   }
 
   static propTypes = {
     show: PropTypes.bool.isRequired,
     onHide: PropTypes.func.isRequired,
-    tip: PropTypes.object.isRequired,
+    tip: PropTypes.object,
     onChange: PropTypes.func.isRequired,
   }
 
@@ -30,10 +30,10 @@ class TipMenuModal extends Component {
 
     if (nextProps.show && !this.props.show) {
       this.setState(state => ({
-        howValue: Editor.createValuefromString(tip.how),
-        whyValue: Editor.createValuefromString(tip.why),
-        objectives: tip.objectives,
-        users: tip.users,
+        howValue: tip ? Editor.createValuefromString(tip.how) : Editor.createEmptyValue(),
+        whyValue: tip ? Editor.createValuefromString(tip.why) : Editor.createEmptyValue(),
+        objectives: tip ? tip.objectives : [],
+        users: tip ? tip.users : [],
       }));
     }
   }
