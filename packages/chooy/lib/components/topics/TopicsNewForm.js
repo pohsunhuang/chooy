@@ -6,6 +6,8 @@ import { Components, registerComponent, withCurrentUser } from 'meteor/vulcan:co
 import Topics from '../../modules/topics/collection';
 
 const TopicsNewForm = ({ topicName, router }) => {
+  const prefilledProps = { title: topicName };
+
   const successCallback = (newTopic) => {
     router.push(`/topic/${newTopic._id}`);
   };
@@ -20,6 +22,7 @@ const TopicsNewForm = ({ topicName, router }) => {
       <Components.SmartForm 
         collection={Topics}
         showRemove={false}
+        prefilledProps={prefilledProps}
         successCallback={successCallback}
         cancelCallback={cancelCallback}
       />

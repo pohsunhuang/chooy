@@ -5,7 +5,7 @@ import { withRouter } from 'react-router';
 import Button from 'react-bootstrap/lib/Button';
 
 import Topics from '../../modules/topics/collection';
-import { getI18nMessage, findMostRelevantString } from '../../modules/utils';
+import { getI18nMessage } from '../../modules/utils';
 
 class TopicsSearchForm extends Component {
   constructor(props){
@@ -53,12 +53,12 @@ class TopicsSearchForm extends Component {
         case 'ArrowUp':
           e.preventDefault();
           newSelectedIndex = !newSelectedIndex ? this.props.results.length : newSelectedIndex-1;
-          this.updateInputValue(newSelectedIndex ? this.props.results[newSelectedIndex-1].names[0] : this.props.query);
+          this.updateInputValue(newSelectedIndex ? this.props.results[newSelectedIndex-1].foundName : this.props.query);
           break;
         case 'ArrowDown':
           e.preventDefault();
           newSelectedIndex = (newSelectedIndex+1) % (this.props.results.length+1);
-          this.updateInputValue(newSelectedIndex ? this.props.results[newSelectedIndex-1].names[0] : this.props.query);
+          this.updateInputValue(newSelectedIndex ? this.props.results[newSelectedIndex-1].foundName : this.props.query);
           break;
         case 'Escape':
           this.hideAutoComplete();
@@ -90,7 +90,7 @@ class TopicsSearchForm extends Component {
     if(this.state.selectedTopicIndex > 0) {
       this.updateAutoComplete.cancel();
       this.hideAutoComplete();
-      this.props.router.push(`/search?query=${this.props.results[this.state.selectedTopicIndex-1].names[0]}&offset=0`);
+      this.props.router.push(`/search?query=${this.props.results[this.state.selectedTopicIndex-1].foundName}&offset=0`);
     }
   }
 
@@ -122,7 +122,6 @@ class TopicsSearchForm extends Component {
               <div className='auto-complete'>
                 {this.props.loading ? <Components.Loading/> :
                   this.props.results.map((topic, index) => {
-                    const name = findMostRelevantString(topic.names, this.state.inputValue);
                     return (
                       <div 
                         className={`auto-complete-item` + ((index+1 == this.state.selectedTopicIndex) ? ` active` : ``)}
@@ -132,7 +131,7 @@ class TopicsSearchForm extends Component {
                         onTouchStart={() => { this.setState({selectedTopicIndex: index+1}) }}
                         onTouchMove={this.onAutoCompleteTouchMove}
                         onTouchEnd={this.onAutoCompleteClick}
-                      ><span>{name}</span></div>
+                      ><span>{topic.foundName}</span></div>
                     )
                   })
                 }

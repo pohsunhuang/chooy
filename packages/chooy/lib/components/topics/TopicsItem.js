@@ -5,7 +5,7 @@ import { Link } from 'react-router';
 
 const TopicsItem = ({ topic, isSearchResult }) => {
   const style = isSearchResult ? 'search-result' : 'item';
-  const name = (isSearchResult && (topic.names.length >= 2)) ? `${topic.names[0]} (${topic.names[1]})` : topic.names[0];
+  const name = (isSearchResult && topic.names.length) ? `${topic.title} (${topic.names[0]})` : topic.title;
 
   return (<div className={`topics-${style}-wrapper`}>
     <Link className={`topics-${style}-image`} to={`/topic/${topic._id}`}>

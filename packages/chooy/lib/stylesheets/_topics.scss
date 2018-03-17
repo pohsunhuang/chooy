@@ -266,6 +266,10 @@
     }
   }
 
+  input {
+    @include form-input;
+  }
+
   .form-section {
     margin-bottom: 86px;
   }

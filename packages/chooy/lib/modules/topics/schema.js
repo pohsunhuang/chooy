@@ -1,9 +1,22 @@
 import FormChips from '../../components/form/FormChips';
 import { getSetting } from 'meteor/vulcan:lib';
 
+import { getI18nMessage } from '../utils';
+
 export const TopicInfo = {
+  title: {
+    label: 'Title',
+    type: String,
+    optional: false,
+    viewableBy: ['guests'],
+    insertableBy: ['members'],
+    editableBy: ['members'],
+    placeholder: getI18nMessage('topics.enter.title'),
+    searchable: true,
+  },
+
   names: {
-    label: 'Names' ,
+    label: 'Aliases',
     type: Array,
     optional: true,
     viewableBy: ['guests'],
@@ -16,6 +29,13 @@ export const TopicInfo = {
       }
     },
     searchable: true,
+  },
+
+  //graphql only field, no database storage, used specifically for topic search only
+  foundName: {
+    type: String,
+    optional: true,
+    viewableBy: ['guests'],
   },
 
   'names.$': {

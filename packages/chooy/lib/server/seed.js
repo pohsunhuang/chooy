@@ -4,7 +4,8 @@ import Topics from '../modules/topics/collection';
 
 const seedData = [
   {
-    names: ['apple'],
+    title: 'apple',
+    names: [],
     locale: 'en',
     photos: [
       [
@@ -30,7 +31,8 @@ const seedData = [
     tips: [],
   },
   {
-    names: ['phone', 'cell phone', 'cellular phone', 'mobile phone'],
+    title: 'phone',
+    names: ['cell phone', 'cellular phone', 'mobile phone'],
     locale: 'en',
     photos: [
       [
@@ -107,7 +109,8 @@ const seedData = [
     ],    
   },
   {
-    names: ['cup'],
+    title: 'cup',
+    names: [],
     locale: 'en',
     photos: [
       [
@@ -133,7 +136,8 @@ const seedData = [
     tips: [],    
   },
   {
-    names: ['house'],
+    title: 'house',
+    names: [],
     locale: 'en',
     photos: [
       [
@@ -159,7 +163,8 @@ const seedData = [
     tips: [],    
   },
   {
-    names: ['job', 'occupation'],
+    title: 'job',
+    names: ['occupation'],
     locale: 'en',
     photos: [
       [
@@ -185,7 +190,8 @@ const seedData = [
     tips: [],    
   },
   {
-    names: ['hair style', 'hairstyle'],
+    title: 'hair style',
+    names: ['hairstyle'],
     locale: 'en',
     photos: [
       [
@@ -211,7 +217,8 @@ const seedData = [
     tips: [],    
   },
   {
-    names: ['hobby', 'avocation'],
+    title: 'hobby',
+    names: ['avocation'],
     locale: 'en',
     photos: [
       [
@@ -237,7 +244,8 @@ const seedData = [
     tips: [],    
   },
   {
-    names: ['pineapple'],
+    title: 'pineapple',
+    names: [],
     locale: 'en',
     photos: [
       [
@@ -263,7 +271,8 @@ const seedData = [
     tips: [],    
   },
   {
-    names: ['apple'],
+    title: 'apple',
+    names: [],
     locale: 'tw',
     photos: [
       [
@@ -289,7 +298,8 @@ const seedData = [
     tips: [],    
   },
   {
-    names: ['Computer', 'PC'],
+    title: 'Computer',
+    names: ['PC'],
     locale: 'en',
     photos: [
       [

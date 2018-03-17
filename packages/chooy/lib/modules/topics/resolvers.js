@@ -22,13 +22,16 @@ const resolvers = {
 
         // get selector from terms
         const textSelector = { $text: { $search: terms.query } };
-        const prefixSelector = { names: { $regex: '^' + terms.query, $options: '-i' } };
+        const prefixTitleSelector = { title: { $regex: '^' + terms.query, $options: '-i' } };
+        const prefixAliasSelector = { names: { $regex: '^' + terms.query, $options: '-i' } };
         let selectors = [];
+
         if ( terms.searchText ) {
           selectors.push(textSelector);
         }
 
-        selectors.push(prefixSelector);
+        selectors.push(prefixTitleSelector);
+        selectors.push(prefixAliasSelector);
 
         // preform Mongo query
         const tmpDocs = collection.find({$or: selectors}, options).fetch();
@@ -37,17 +40,16 @@ const resolvers = {
         // leave 1 alias for search results
         if (!terms.searchText) {
           tmpDocs.forEach((doc) => {
-            const name = findMostRelevantString(doc.names, terms.query);
-            doc.names = [name];
+            doc.foundName = findMostRelevantString(_.concat(doc.names, [doc.title]), terms.query);
           });
         } else {
           tmpDocs.forEach((doc) => {
-            doc.names = _.take(doc.names, 2);
+            doc.names = _.take(doc.names, 1);
           });
         }
 
         // remove duplication if needed
-        const docs = terms.unique ? _.uniqBy(tmpDocs, 'names[0]') : tmpDocs;
+        const docs = terms.unique ? _.uniqBy(tmpDocs, 'foundName') : tmpDocs;
 
         // if collection has a checkAccess function defined, remove any documents that doesn't pass the check
         const viewableDocs = collection.checkAccess ? _.filter(docs, doc => collection.checkAccess(currentUser, doc)) : docs;
@@ -73,13 +75,16 @@ const resolvers = {
         const collection = context['Topics'];
 
         const textSelector = { $text: { $search: terms.query } };
-        const prefixSelector = { names: { $regex: '^' + terms.query, $options: '-i' } };
+        const prefixTitleSelector = { title: { $regex: '^' + terms.query, $options: '-i' } };
+        const prefixAliasSelector = { names: { $regex: '^' + terms.query, $options: '-i' } };        
         let selectors = [];
+
         if ( terms.searchText ) {
           selectors.push(textSelector);
         }
 
-        selectors.push(prefixSelector);
+        selectors.push(prefixTitleSelector);
+        selectors.push(prefixAliasSelector);
 
         return collection.find({$or: selectors}).count();
       } else {
