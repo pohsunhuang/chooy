@@ -154,6 +154,8 @@ class Chips extends Component {
   }
 
   onChipButtonClick(e) {
+    e.preventDefault();
+
     if (!this.props.readOnly && e.currentTarget.value) {  
       // typeof index is string for button
       this.deleteChip(parseInt(e.currentTarget.value));
@@ -164,9 +166,10 @@ class Chips extends Component {
   render() {
     const { readOnly, items, placeholder, suggestions, onBlur } = this.props;
     const { value } = this.state;
+    const isEmpty = !items || items.length === 0;
 
     return (
-      <ul className={`chips${readOnly ? ' read-only' : ''}`}>
+      <ul className={`chips${readOnly ? ' read-only' : ''}${isEmpty ? ' chips-empty' : ''}`}>
         {items.map((item, idx) => <li 
                                                className='chip' 
                                                tabIndex='-1' 
