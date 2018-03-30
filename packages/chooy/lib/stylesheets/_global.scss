@@ -92,6 +92,14 @@ button:focus, a:focus {
   }
 }
 
+@mixin input-color {
+  color: $normal-text;
+  &::placeholder {
+    color: $placeholder-color;
+    opacity: 1;
+  }
+}
+
 .information{
   margin-bottom: $spacing;
   text-align: center;
@@ -103,7 +111,9 @@ button:focus, a:focus {
 
 @mixin form-input {
   @include input-text;
+  @include input-color;
   @include input-border;
+  outline: none;
   padding: 1rem;
   height: auto;
   box-shadow: none;

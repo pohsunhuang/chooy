@@ -34,7 +34,7 @@
   padding: 1rem;
   border-bottom: 1px solid $light-grey;
   text-decoration: none;
-  color: $normal-text;
+  @include input-color;
   cursor: default;
   &:last-child{
     border-bottom: 0;

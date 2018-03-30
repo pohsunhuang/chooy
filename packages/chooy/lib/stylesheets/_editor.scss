@@ -17,6 +17,7 @@
 .editor{
   padding: 1rem;
   @include input-text;
+  @include input-color;
 
   .modal-trigger {
     display: inline-block;
@@ -66,16 +67,7 @@
   }
 
   input {
-    padding: 1rem;
-    border-radius: 0.5px;
-    border: none;
-    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
-    &:focus{
-      outline: none;
-      box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(0, 0, 0, 0.08);
-    }
-    @include input-text;
-    font-weight: 900;    
+    @include form-input;
   }
 
   button {
@@ -95,4 +87,9 @@
   &.active {
     outline: 1px solid $main-color;
   }
+}
+
+.editor-placeholder {
+  color: $placeholder-color;
+  opacity: 1 !important;
 }

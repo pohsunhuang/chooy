@@ -340,6 +340,26 @@ class Editor extends Component {
     )
   }
 
+  renderPlaceholder = (props) => {
+    const { node, editor } = props;
+
+    if (!editor.props.placeholder) return;
+    if (editor.state.isComposing) return;    
+    if (node.object != 'block') return;
+    if (node.text != '') return;
+    if (editor.value.document.getBlocks().size > 1) return;
+   
+    return (
+      <span
+        contentEditable={false}
+        className='editor-placeholder'
+        style={{ display: 'inline-block', width: '0', whiteSpace: 'nowrap', opacity: '0.33' }}
+      >
+        {editor.props.placeholder}
+      </span>
+    );
+  }
+
   renderNode = (props) => {
     const { attributes, children, node, isSelected } = props
     switch (node.type) {
@@ -415,6 +435,7 @@ class Editor extends Component {
             placeholder={placeholder}
             value={value}
             onChange={onChange}
+            renderPlaceholder={this.renderPlaceholder}
             renderNode={this.renderNode}
             renderMark={this.renderMark}
             validateNode={this.validateNode}
