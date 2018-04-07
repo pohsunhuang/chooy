@@ -121,7 +121,10 @@
   overflow-y: auto;
   &::-webkit-scrollbar{
     display: none;
-  }  
+  }
+  >:last-child {
+    margin-bottom: 200px; // Extra blank footer to contain auto suggestions
+  }
 }
 
 .tip-edit-buttons {
