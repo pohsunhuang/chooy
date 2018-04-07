@@ -164,9 +164,12 @@ class Chips extends Component {
   }
 
   render() {
-    const { readOnly, items, placeholder, suggestions, onBlur } = this.props;
+    const { readOnly, items, placeholder, onBlur } = this.props;
     const { value } = this.state;
     const isEmpty = !items || items.length === 0;
+
+    // Do not suggest something we already have
+    const suggestions = _.without(this.props.suggestions, ...items);
 
     return (
       <ul className={`chips${readOnly ? ' read-only' : ''}${isEmpty ? ' chips-empty' : ''}`}>
