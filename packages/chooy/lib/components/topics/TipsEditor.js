@@ -160,17 +160,21 @@ class TipsEditor extends Component {
     const { selectedTipIdx } = this.state;
 
     if (onChange && !readOnly) {
-      let newTips = _.cloneDeep(tips);
+      if (selectedTipIdx >= 0 && selectedTipIdx < tips.length) {// Modify Tip
+        let newTips = _.cloneDeep(tips);
+        newTips[selectedTipIdx] = tip; 
+        onChange(newTips);
+      } else if (selectedTipIdx === -1) {// Add new Tip
+        let newTips = _.cloneDeep(tips);
+        newTips.push(tip);
+        onChange(newTips);
 
-      if (selectedTipIdx >= 0 && selectedTipIdx < tips.length) {
-        newTips[selectedTipIdx] = tip; // Modify Tip
-      } else if (selectedTipIdx === -1) {
-        newTips.push(tip); // Add new Tip
+        // Scroll new Tip into view
+        this.routeToTip(newTips.length - 1);
+        this.setState(state => ({scrollToTipIdx: newTips.length - 1}));
       } else {
         return ;
       }
-
-      onChange(newTips);
     }
   }
 
