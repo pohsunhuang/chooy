@@ -37,6 +37,8 @@ class TipsEditor extends Component {
       showTipEditModal: false,
       selectedTipIdx: -1,
       scrollToTipIdx: -1,
+      userSuggestions: _.union(...props.tips.map(tip => tip.users)),
+      objectiveSuggestions: _.union(...props.tips.map(tip => tip.objectives)),      
     }
   }
 
@@ -49,6 +51,18 @@ class TipsEditor extends Component {
   static defaultProps = {
     tips: [],
     readOnly: false,
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { tips } = this.props;
+
+    // Generate new suggestions for different Tips (Check reference only, tips must be immutable)
+    if (nextProps.tips !== tips) {
+      this.setState(state => ({
+        userSuggestions: _.union(...nextProps.tips.map(tip => tip.users)),
+        objectiveSuggestions: _.union(...nextProps.tips.map(tip => tip.objectives)),
+      }));
+    }
   }
 
   componentDidUpdate() {
@@ -201,14 +215,29 @@ class TipsEditor extends Component {
 
   renderTipEditModal = () => {
     const { tips } = this.props;
-    const { showTipEditModal, selectedTipIdx } = this.state;
+    const { showTipEditModal, selectedTipIdx, userSuggestions, objectiveSuggestions } = this.state;
 
-    if (selectedTipIdx === -1) {
-      // Add new Tip
-      return <TipEditModal show={showTipEditModal} onHide={this.handleHideTipEditModal} onChange={this.handleTipChange}/>
-    } else if (selectedTipIdx >= 0 && selectedTipIdx < tips.length) {
-      // Modify Tip
-      return <TipEditModal show={showTipEditModal} onHide={this.handleHideTipEditModal} tip={tips[selectedTipIdx]} onChange={this.handleTipChange}/>
+    if (selectedTipIdx === -1) {// Add new Tip
+      return (
+        <TipEditModal
+          show={showTipEditModal}
+          onHide={this.handleHideTipEditModal}
+          onChange={this.handleTipChange}
+          userSuggestions={userSuggestions}
+          objectiveSuggestions={objectiveSuggestions}
+        />
+      );
+    } else if (selectedTipIdx >= 0 && selectedTipIdx < tips.length) {// Modify Tip
+      return (
+        <TipEditModal
+          show={showTipEditModal}
+          onHide={this.handleHideTipEditModal}
+          onChange={this.handleTipChange}
+          tip={tips[selectedTipIdx]}
+          userSuggestions={userSuggestions}
+          objectiveSuggestions={objectiveSuggestions}          
+        />
+      );
     } else {
       return null;
     }
@@ -229,7 +258,7 @@ class TipsEditor extends Component {
             : null }
         </div>  
         <TipMenuModal show={showTipMenu} onHide={this.handleHideTipMenu} onClick={this.handleClickMenuItem} tipIndex={selectedTipIdx} tipsLength={tips.length}/>
-        {this.renderTipEditModal()}
+        {readOnly ? null: this.renderTipEditModal()}
       </div>
     );
   }

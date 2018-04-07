@@ -23,6 +23,8 @@ class TipMenuModal extends Component {
     onHide: PropTypes.func.isRequired,
     tip: PropTypes.object,
     onChange: PropTypes.func.isRequired,
+    userSuggestions: PropTypes.arrayOf(PropTypes.string),
+    objectiveSuggestions: PropTypes.arrayOf(PropTypes.string),
   }
 
   componentWillReceiveProps(nextProps) {
@@ -71,7 +73,7 @@ class TipMenuModal extends Component {
   }
 
   render() {
-    const { show, onHide } = this.props;
+    const { show, onHide, userSuggestions, objectiveSuggestions } = this.props;
     const { howValue, whyValue, objectives, users } = this.state;
 
     return (
@@ -89,9 +91,9 @@ class TipMenuModal extends Component {
             <h3 className='content-text content-title'><span>The Reason Why We Choose Like Above</span></h3>
             <Editor placeholder='why' value={whyValue} onChange={this.handleWhyChange}/>
             <h3 className='content-text content-title'><span>Objectives</span></h3>
-            <Chips placeholder={'Enter an user type'} items={objectives} onItemsChange={this.handleObjectivesChange}/>
+            <Chips placeholder={'Enter an user type'} items={objectives} onItemsChange={this.handleObjectivesChange} suggestions={objectiveSuggestions}/>
             <h3 className='content-text content-title'><span>Users</span></h3>
-            <Chips placeholder={'Enter an objective'} items={users} onItemsChange={this.handleUsersChange}/>
+            <Chips placeholder={'Enter an objective'} items={users} onItemsChange={this.handleUsersChange} suggestions={userSuggestions}/>
           </div>
           <div className='tip-edit-buttons sticky-footer'>
             <button className='main-button' onClick={this.handleClickOK}>OK</button>
