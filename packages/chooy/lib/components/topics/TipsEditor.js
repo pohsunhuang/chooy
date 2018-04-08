@@ -217,6 +217,12 @@ class TipsEditor extends Component {
     }
   }
 
+  renderAddTipLink = () => {
+    return (
+      <a className='add-tip-link' onClick={this.handleClickAdd}>Add choosing tip</a>
+    );
+  }
+
   renderTipEditModal = () => {
     const { tips } = this.props;
     const { showTipEditModal, selectedTipIdx, userSuggestions, objectiveSuggestions } = this.state;
@@ -255,14 +261,15 @@ class TipsEditor extends Component {
     return (
       <div className='tips-editor'>
         <div>
+          {!readOnly && !!tips && tips.length !== 0 && this.renderAddTipLink()}
           {this.renderTipList()}
-          {!readOnly && <a className='add-tip-link' onClick={this.handleClickAdd}>Add choosing tip</a>}
+          {!readOnly && this.renderAddTipLink()}
           {(!!tips && tips.length) ? 
             <Pagination offset={offset} totalCount={tips.length} itemsPerPage={TIPS_PER_PAGE} getURLByOffset={this.getURLByOffset}/>
             : null }
         </div>  
         <TipMenuModal show={showTipMenu} onHide={this.handleHideTipMenu} onClick={this.handleClickMenuItem} tipIndex={selectedTipIdx} tipsLength={tips.length}/>
-        {readOnly ? null: this.renderTipEditModal()}
+        {readOnly ? null : this.renderTipEditModal()}
       </div>
     );
   }
