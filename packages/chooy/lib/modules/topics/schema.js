@@ -43,7 +43,7 @@ export const TopicInfo = {
   },  
 
   tips: {
-    label: 'Tips',
+    label: 'Choosing Tips',
     type: Array,
     optional: true,    
     viewableBy: ['guests'],
