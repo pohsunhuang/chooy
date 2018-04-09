@@ -211,7 +211,9 @@ class TipsEditor extends Component {
 
   renderTipList = () => {
     const { tips, readOnly } = this.props;
-    const { offset = 0 } = this.props.router.location.query;
+    let offset = Number(this.props.router.location.query.offset);
+
+    offset = isNaN(offset) ? 0 : offset;
     
     if (!!tips && tips.length) {
       return tips.map((tip, idx) => {
