@@ -37,6 +37,10 @@ class TipItem extends Component {
     this.tip.scrollIntoView(true);
   }
 
+  getBoundingClientRect = () => {
+    return this.tip.getBoundingClientRect();
+  }
+
   render() {
     const { readOnly, tip } = this.props;
 

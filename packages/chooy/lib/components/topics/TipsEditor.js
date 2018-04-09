@@ -30,7 +30,14 @@ class TipsEditor extends Component {
 
     // onHide() of Modal of react-boostrap and push() of react-router manipulate scroll position somehow,
     // so we have to delay scrolling tip into view inorder to make it work
-    this.debouncedScrollTipIntoView = debounce(idx => this.tips[idx].scrollTipIntoView(), 400);
+    this.debouncedScrollTipIntoView = debounce(idx => {
+      if (!this.tips[idx]) return;
+      
+      const { top } = this.tips[idx].getBoundingClientRect();
+      if (top < 0 || top > window.innerHeight) {
+        this.tips[idx].scrollTipIntoView();
+      }
+    }, 400);
 
     this.state = {
       showTipMenu: false,
