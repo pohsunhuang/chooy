@@ -211,9 +211,7 @@ class TipsEditor extends Component {
 
   renderTipList = () => {
     const { tips, readOnly } = this.props;
-    let offset = Number(this.props.router.location.query.offset);
-
-    offset = isNaN(offset) ? 0 : offset;
+    const offset = Number(this.props.router.location.query.offset) || 0;
     
     if (!!tips && tips.length) {
       return tips.map((tip, idx) => {
@@ -272,7 +270,7 @@ class TipsEditor extends Component {
 
   render() {
     const { tips, readOnly } = this.props;
-    const offset = Number(this.props.router.location.query.offset);
+    const offset = Number(this.props.router.location.query.offset) || 0;
     const { showTipMenu, selectedTipIdx } = this.state;
 
     return (
@@ -283,7 +281,7 @@ class TipsEditor extends Component {
           {!readOnly && this.renderAddTipLink()}
           {(!!tips && tips.length) ? 
             <Pagination 
-              offset={isNaN(offset) ? 0 : offset}
+              offset={offset}
               totalCount={tips.length}
               itemsPerPage={TIPS_PER_PAGE}
               getURLByOffset={this.getURLByOffset}
