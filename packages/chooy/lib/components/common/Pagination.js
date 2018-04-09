@@ -1,9 +1,18 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 
 import Icon from './Icons';
 
-const Pagination = ({ offset=0, totalCount=0, itemsPerPage=10, getURLByOffset }) => {
+const onClick = (e) => {
+  const { onFlipPage } = onClick;
+
+  if (onFlipPage) {
+    onFlipPage(e.currentTarget.value);
+  }
+}
+
+const Pagination = ({ offset, totalCount, itemsPerPage, getURLByOffset, onFlipPage }) => {
   const pageNumbers = [];
   const activePageNumber = Math.floor(offset / (itemsPerPage || 10)) + 1;
   const totalPageNumber = Math.ceil(totalCount / (itemsPerPage || 10));
@@ -39,13 +48,18 @@ const Pagination = ({ offset=0, totalCount=0, itemsPerPage=10, getURLByOffset })
   }
 
   const hidden = pageNumbers.length == 0;
+  const previousOffset = (activePageNumber - 2) * (itemsPerPage || 10);
+  let pageOffset = 0;
+  const nextOffset = activePageNumber * (itemsPerPage || 10);
+
+  onClick.onFlipPage = onFlipPage;
 
   return (
     <div className={hidden ? 'hidden' : 'chooy-pagination'}>
       <ul className='pagination-list'>
         {activePageNumber == 1 ? null:
-          <li className='pagination-list-control'>
-            <Link to={getURLByOffset((activePageNumber-2)*(itemsPerPage || 10))}>
+          <li value={previousOffset} className='pagination-list-control' onClick={onClick}>
+            <Link to={getURLByOffset(previousOffset)}>
               <Icon name='prev' size={16}/>
             </Link>
           </li>
@@ -56,12 +70,13 @@ const Pagination = ({ offset=0, totalCount=0, itemsPerPage=10, getURLByOffset })
           } else if (pageNumber == -1) {
             return <li className='pagination-list-ellipsis' key={idx}><span>...</span></li>
           } else {
-            return <li className='pagination-list-item'key={idx}><Link to={getURLByOffset((pageNumber-1)*(itemsPerPage || 10))}>{pageNumber}</Link></li>
+            pageOffset = (pageNumber-1)*(itemsPerPage || 10);
+            return <li value={pageOffset} className='pagination-list-item' onClick={onClick} key={idx}><Link to={getURLByOffset(pageOffset)}>{pageNumber}</Link></li>
           }
         })}
         {activePageNumber == totalPageNumber ? null: 
-          <li className='pagination-list-control'>
-            <Link to={getURLByOffset((activePageNumber)*(itemsPerPage || 10))}>
+          <li value={nextOffset} className='pagination-list-control' onClick={onClick}>
+            <Link to={getURLByOffset(nextOffset)}>
               <Icon name='next' size={16}/>
             </Link>
           </li>
@@ -69,6 +84,21 @@ const Pagination = ({ offset=0, totalCount=0, itemsPerPage=10, getURLByOffset })
       </ul>
     </div>
   )
+}
+
+Pagination.propTypes = {
+  offset: PropTypes.number,
+  totalCount: PropTypes.number,
+  itemsPerPage: PropTypes.number,
+  getURLByOffset: PropTypes.func.isRequired,
+  onFlipPage: PropTypes.func,
+}
+
+Pagination.defaultProps = {
+  offset: 0,
+  totalCount: 0,
+  itemsPerPage: 10,
+  onFlipPage: (offset) => {console.log(offset)},
 }
 
 export default Pagination;
