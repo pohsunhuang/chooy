@@ -187,6 +187,14 @@ class TipsEditor extends Component {
     return `${pathname}?${qs.stringify(queryStringObj)}`;
   }
 
+  onFlipPage = (offset) => {
+    const { tips } = this.props;
+
+    if (offset >= 0 && offset < tips.length) {
+      this.setState(state => ({scrollToTipIdx: offset}));
+    }
+  }
+
   routeToTip = (tipIndex) => {
     const { router } = this.props;
     const offset = Math.floor(tipIndex / TIPS_PER_PAGE) * TIPS_PER_PAGE;
@@ -255,7 +263,7 @@ class TipsEditor extends Component {
 
   render() {
     const { tips, readOnly } = this.props;
-    const { offset = 0 } = this.props.router.location.query;
+    const offset = Number(this.props.router.location.query.offset);
     const { showTipMenu, selectedTipIdx } = this.state;
 
     return (
@@ -265,8 +273,13 @@ class TipsEditor extends Component {
           {this.renderTipList()}
           {!readOnly && this.renderAddTipLink()}
           {(!!tips && tips.length) ? 
-            <Pagination offset={offset} totalCount={tips.length} itemsPerPage={TIPS_PER_PAGE} getURLByOffset={this.getURLByOffset}/>
-            : null }
+            <Pagination 
+              offset={isNaN(offset) ? 0 : offset}
+              totalCount={tips.length}
+              itemsPerPage={TIPS_PER_PAGE}
+              getURLByOffset={this.getURLByOffset}
+              onFlipPage={this.onFlipPage}
+            /> : null }
         </div>  
         <TipMenuModal show={showTipMenu} onHide={this.handleHideTipMenu} onClick={this.handleClickMenuItem} tipIndex={selectedTipIdx} tipsLength={tips.length}/>
         {readOnly ? null : this.renderTipEditModal()}
