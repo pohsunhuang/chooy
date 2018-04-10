@@ -58,7 +58,7 @@ class TopicsPage extends Component {
       <div className='sub-menu'>
         {subMenuItems.map((menuItem, idx) => {
           return (
-            <Link key={idx} className='sub-menu-item' to={`${pathname}?page=${menuItem.to}`}>
+            <Link key={idx} className='sub-menu-item' to={`${pathname}?page=${menuItem.to}&offset=0`}>
               <span>{menuItem.name}</span>
             </Link>
           );
