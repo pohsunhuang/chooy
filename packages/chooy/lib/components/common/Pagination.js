@@ -98,7 +98,7 @@ Pagination.defaultProps = {
   offset: 0,
   totalCount: 0,
   itemsPerPage: 10,
-  onFlipPage: (offset) => {console.log(offset)},
+  onFlipPage: () => {},
 }
 
 export default Pagination;
