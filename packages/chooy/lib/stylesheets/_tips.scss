@@ -144,7 +144,7 @@
   padding: 1rem 0;
   width: 100%;
   border-top: 1px solid $input-border-color;
-  @include input-text;
+  @include input-font-size;
   cursor: pointer;
   color: $main-color;
   &:hover {

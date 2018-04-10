@@ -85,14 +85,14 @@ class TipMenuModal extends Component {
       >
         <Modal.Body className='tip-edit-body'>
           <div className='tip-edit-form'>  
-            <h3 className='content-text content-title'><span>How to Choose</span></h3>  
+            <h3 className='sub-title'><span>How to Choose</span></h3>  
             <h5 className='tip-edit-guide'><span>Tip: One opinion at a time. Be short and specific. Write only "how", leave "why" to the next section.</span></h5>
             <Editor placeholder='how' value={howValue} onChange={this.handleHowChange}/>
-            <h3 className='content-text content-title'><span>The Reason Why We Choose Like Above</span></h3>
+            <h3 className='sub-title'><span>The Reason Why We Choose Like Above</span></h3>
             <Editor placeholder='why' value={whyValue} onChange={this.handleWhyChange}/>
-            <h3 className='content-text content-title'><span>Objectives</span></h3>
+            <h3 className='sub-title'><span>Objectives</span></h3>
             <Chips placeholder={'Enter an user type'} items={objectives} onItemsChange={this.handleObjectivesChange} suggestions={objectiveSuggestions}/>
-            <h3 className='content-text content-title'><span>Users</span></h3>
+            <h3 className='sub-title'><span>Users</span></h3>
             <Chips placeholder={'Enter an objective'} items={users} onItemsChange={this.handleUsersChange} suggestions={userSuggestions}/>
           </div>
           <div className='tip-edit-buttons sticky-footer'>

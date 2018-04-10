@@ -16,7 +16,7 @@
     outline: none;
     box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(0, 0, 0, 0.08);
   }
-  @include input-text;
+  @include input-font-size;
 }
   
 .auto-suggest {
@@ -44,7 +44,7 @@
     color: $hover-text;
     background: $light-grey;
   }
-  @include input-text;  
+  @include input-font-size;  
 }
   
 .auto-suggest-button {
@@ -61,5 +61,5 @@
     outline:none;
     color: $dark-grey;
   }
-  @include input-text;
+  @include input-font-size;
 }

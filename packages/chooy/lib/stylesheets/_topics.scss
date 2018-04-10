@@ -21,7 +21,7 @@
     outline: none;
     box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(0, 0, 0, 0.08);
   }
-  @include input-text;
+  @include input-font-size;
   @include input-color;
   font-weight: 900;
 }
@@ -51,7 +51,7 @@
     color: $hover-text;
     background: $light-grey;
   }
-  @include input-text;  
+  @include input-font-size;  
 }
 
 .topics-search-button{
@@ -68,7 +68,7 @@
     outline:none;
     color: $dark-grey;
   }
-  @include input-text;
+  @include input-font-size;
 }
 
 //////////////////////////////////////////////////////
@@ -155,7 +155,7 @@
   max-width: 300px;
   padding: 0 $spacing/4;
   background: white;
-  @include input-text;
+  @include input-font-size;
   @include medium-large{
     width: calc(100%/3);
   }
@@ -193,7 +193,7 @@
   width: 100%;
   margin-bottom: 0.5*$spacing;
   outline: 1px solid rgba(0, 0, 0, 0.2);
-  @include input-text;
+  @include input-font-size;
 }
 
 .topics-search-result-image{
@@ -255,8 +255,7 @@
 .topics-edit-form {
   .form-group {
     & > label {
-      @include content-text;
-      @include content-title;      
+      @include sub-title;     
       width: 100%;
       margin: 20px 0 10px 0;
     }

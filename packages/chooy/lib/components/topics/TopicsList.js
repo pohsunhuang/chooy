@@ -9,7 +9,7 @@ import Icon from '../common/Icons';
 const TopicsList = ({results = [], currentUser, loading}) =>
   <div className='topics-list'>
     <div className='topics-trend-list'>
-      <h4 className='title title-text'><FormattedMessage id='topics.popular' /></h4>
+      <h4 className='title'><FormattedMessage id='topics.popular' /></h4>
       <div className='full-width-wrapper'>
         <div className='topics-slider'>
           {loading ?

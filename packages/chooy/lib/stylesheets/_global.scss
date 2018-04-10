@@ -16,15 +16,23 @@ button:focus, a:focus {
 	margin: 0 auto;
 }
 
-.brand{
-  font-family: 'Montserrat';
-  color: $main-color;
-}
-
-.brand-text{
+@mixin brand-font-size {
   font-size: 48px;
   @include small{
     font-size: 40px;
+  }
+}
+
+.brand{
+  font-family: 'Montserrat';
+  color: $main-color;
+  @include brand-font-size;
+}
+
+@mixin tagline-font-size {
+  font-size: 48px;
+  @include small{
+    font-size: 25px;
   }
 }
 
@@ -32,13 +40,14 @@ button:focus, a:focus {
   font-family: 'Quicksand';
   font-weight: 400;
   margin-bottom: 2*$spacing;
+  @include tagline-font-size;
   @include medium-large{
     max-width: 60%;
   }
 }
 
-.tagline-text{
-  font-size: 48px;
+@mixin title-font-size{
+  font-size: 32px;
   @include small{
     font-size: 25px;
   }
@@ -51,41 +60,32 @@ button:focus, a:focus {
     text-transform: capitalize;
   }
   margin-bottom: 1.5*$spacing;
+  @include title-font-size;
 }
 
-.title-text{
-  font-size: 32px;
-  @include small{
-    font-size: 25px;
-  }
-}
-
-@mixin content-text {
+@mixin content-font-size {
   font-size: 17px;
 }
 
-.content-text{
-  @include content-text;
+@mixin content-text {
+  @include content-font-size;
   color: $normal-text;
 }
 
-@mixin content-title {
+@mixin sub-title {
+  @include content-text;
   font-weight: 900;
 }
 
-.content-title{
-  @include content-title;
+.sub-title {
+  @include sub-title;
 }
 
-@mixin label-text {
+@mixin label-font-size {
   font-size: 15px;
 }
 
-.label-text {
-  @include label-text;
-}
-
-@mixin input-text{
+@mixin input-font-size {
   font-size: 19px;
   @include small{
     font-size: 16px;
@@ -103,14 +103,14 @@ button:focus, a:focus {
 .information{
   margin-bottom: $spacing;
   text-align: center;
-  @include input-text;
+  @include input-font-size;
   a{
     color: $main-color;
   }
 }
 
 @mixin form-input {
-  @include input-text;
+  @include input-font-size;
   @include input-color;
   @include input-border;
   outline: none;
@@ -134,7 +134,7 @@ button:focus, a:focus {
   padding: 1rem;
   border-radius: 2px;
   border: 1px solid $main-color;
-  @include input-text;  
+  @include input-font-size;  
   cursor: pointer;
 }
 

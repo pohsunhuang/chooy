@@ -16,7 +16,7 @@
     height: 30px;
     line-height: 30px;
     font-weight: 900;
-    @include label-text;
+    @include label-font-size;
   }
 
   .pagination-list-item{

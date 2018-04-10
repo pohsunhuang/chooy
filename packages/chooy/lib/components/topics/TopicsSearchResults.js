@@ -19,7 +19,7 @@ const createNewTopicURL = (query) => {
 const TopicsSearchResults = ({results = [], loading, totalCount, terms}) => {
   return (
     <div>
-      <h4 className='title title-text'><Message id='topics.search.results' /></h4>
+      <h4 className='title'><Message id='topics.search.results' /></h4>
       {loading ? <Components.Loading /> :
         results.map(topic => <Components.TopicsItem key={topic._id} topic={topic} isSearchResult/>)
       }

@@ -16,7 +16,7 @@
 
 .editor{
   padding: 1rem;
-  @include input-text;
+  @include input-font-size;
   @include input-color;
 
   .modal-trigger {
@@ -74,7 +74,7 @@
     padding: 1rem;
     border-radius: 0.5px;
     border: none;
-    @include input-text;
+    @include input-font-size;
     color: $white;
     background: $main-color; 
   }

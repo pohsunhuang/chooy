@@ -5,8 +5,8 @@ import { getI18nMessage } from '../../modules/utils';
 
 const Home = () =>
   <div>
-    <h1 className='brand brand-text'>chooy</h1>
-    <h3 className='tagline tagline-text'>{getI18nMessage('tagline')}</h3>
+    <h1 className='brand'>chooy</h1>
+    <h3 className='tagline'>{getI18nMessage('tagline')}</h3>
     <Components.TopicsSearchForm />
     <Components.TopicsList />
   </div>

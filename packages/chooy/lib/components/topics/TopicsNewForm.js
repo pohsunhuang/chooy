@@ -18,7 +18,7 @@ const TopicsNewForm = ({ topicName, router }) => {
 
   return (
     <div className='topics-edit-form'>
-      <h1 className='title title-text'><span>{`Creating ${topicName}`}</span></h1>
+      <h1 className='title'><span>{`Creating ${topicName}`}</span></h1>
       <Components.SmartForm 
         collection={Topics}
         showRemove={false}

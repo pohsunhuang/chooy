@@ -93,7 +93,7 @@ class TopicsPage extends Component {
       <div className='topics-page'>
         {this.props.loading ? <Components.Loading/> :
           <div>
-            <h1 className='title title-text'><span>{topic.title}</span></h1>
+            <h1 className='title'><span>{topic.title}</span></h1>
             {this.renderMenu()}
             {this.renderSubMenu()}
             {this.renderContent(topic, location)}
