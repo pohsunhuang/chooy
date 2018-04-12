@@ -14,8 +14,13 @@ class TipMenuModal extends Component {
     show: PropTypes.bool.isRequired,
     onHide: PropTypes.func.isRequired,
     onClick: PropTypes.func.isRequired,
+    onExited: PropTypes.func,    
     tipIndex: PropTypes.number.isRequired,
     tipsLength: PropTypes.number.isRequired,
+  }
+
+  static defaultProps = {
+    onExited: () => {},
   }
 
   createButtonClickHandler = (buttonType) => {
@@ -58,13 +63,15 @@ class TipMenuModal extends Component {
   }
 
   render() {
+    const { className, show, onHide, dialogClassName, onExited } = this.props;
 
     return (
       <Modal
-        className={this.props.className}
-        show={this.props.show}
-        onHide={this.props.onHide}
-        dialogClassName={this.props.dialogClassName}      
+        className={className}
+        show={show}
+        onHide={onHide}
+        onExited={onExited}        
+        dialogClassName={dialogClassName}
       >
         <Modal.Body className='tip-menu-body'>        
           {this.renderMenuItems()}

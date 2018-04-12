@@ -23,8 +23,13 @@ class TipMenuModal extends Component {
     onHide: PropTypes.func.isRequired,
     tip: PropTypes.object,
     onChange: PropTypes.func.isRequired,
+    onExited: PropTypes.func,
     userSuggestions: PropTypes.arrayOf(PropTypes.string),
     objectiveSuggestions: PropTypes.arrayOf(PropTypes.string),
+  }
+
+  static defaultProps = {
+    onExited: () => {},
   }
 
   componentWillReceiveProps(nextProps) {
@@ -73,7 +78,7 @@ class TipMenuModal extends Component {
   }
 
   render() {
-    const { show, onHide, userSuggestions, objectiveSuggestions } = this.props;
+    const { show, onHide, onExited, userSuggestions, objectiveSuggestions } = this.props;
     const { howValue, whyValue, objectives, users } = this.state;
 
     return (
@@ -81,7 +86,8 @@ class TipMenuModal extends Component {
         className={'tip-edit-modal'}
         show={show}
         onHide={onHide}
-        dialogClassName={'tip-edit-dialog'}      
+        onExited={onExited}
+        dialogClassName={'tip-edit-dialog'}   
       >
         <Modal.Body className='tip-edit-body'>
           <div className='tip-edit-form'>  

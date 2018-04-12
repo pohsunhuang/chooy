@@ -28,22 +28,16 @@ class TipsEditor extends Component {
     // Storage for tips' DOM reference
     this.tips = [];
 
-    // onHide() of Modal of react-boostrap and push() of react-router manipulate scroll position somehow,
+    // Vulcan V1.8.7 customize react-router V3 to reset scroll position to the top if we route with action type: PUSH,
     // so we have to delay scrolling tip into view inorder to make it work
-    this.debouncedScrollTipIntoView = debounce(idx => {
-      if (!this.tips[idx]) return;
-      
-      const { top } = this.tips[idx].getBoundingClientRect();
-      if (top < 0 || top > window.innerHeight) {
-        this.tips[idx].scrollTipIntoView();
-      }
-    }, 400);
+    this.debouncedScrollTipIntoView = debounce(idx => this.scrollTipIntoView(idx), 10);
 
     this.state = {
       showTipMenu: false,
       showTipEditModal: false,
       selectedTipIdx: -1,
       scrollToTipIdx: -1,
+      scrollOnModalExitedTipIdx: -1,
       userSuggestions: _.union(...props.tips.map(tip => tip.users)),
       objectiveSuggestions: _.union(...props.tips.map(tip => tip.objectives)),      
     }
@@ -75,11 +69,21 @@ class TipsEditor extends Component {
   componentDidUpdate() {
     const { scrollToTipIdx } = this.state;
     
+    if (scrollToTipIdx >= 0 && this.tips[scrollToTipIdx]) {
+      this.debouncedScrollTipIntoView(scrollToTipIdx);
+    }
+
     if (scrollToTipIdx !== -1) {
-      if (this.tips[scrollToTipIdx]) {
-        this.debouncedScrollTipIntoView(scrollToTipIdx);
-      }
       this.setState(state => ({scrollToTipIdx: -1}));
+    }
+  }
+
+  scrollTipIntoView = (idx) => {
+    if (idx >= 0 && this.tips[idx]) {
+      const { top } = this.tips[idx].getBoundingClientRect();
+      if (top < 0 || top > window.innerHeight) {
+        this.tips[idx].scrollTipIntoView();
+      }
     }
   }
 
@@ -113,7 +117,7 @@ class TipsEditor extends Component {
             newTips.splice(0, 0, newTips[tipIndex]);
             newTips.splice(tipIndex + 1, 1);
             this.routeToTip(0);
-            this.setState(state => ({scrollToTipIdx: 0}));
+            this.setState(state => ({scrollOnModalExitedTipIdx: 0}));
           }
           break;
         case 'moveUp':
@@ -121,7 +125,7 @@ class TipsEditor extends Component {
             newTips.splice(tipIndex - 1, 0, newTips[tipIndex]);
             newTips.splice(tipIndex + 1, 1);
             this.routeToTip(tipIndex - 1);
-            this.setState(state => ({scrollToTipIdx: tipIndex - 1}));
+            this.setState(state => ({scrollOnModalExitedTipIdx: tipIndex - 1}));
           }
           break;
         case 'moveDown':
@@ -129,7 +133,7 @@ class TipsEditor extends Component {
             newTips.splice(tipIndex + 2, 0, newTips[tipIndex]);
             newTips.splice(tipIndex, 1);
             this.routeToTip(tipIndex + 1);
-            this.setState(state => ({scrollToTipIdx: tipIndex + 1}));
+            this.setState(state => ({scrollOnModalExitedTipIdx: tipIndex + 1}));
           }
           break;  
         case 'moveBottom':
@@ -137,7 +141,7 @@ class TipsEditor extends Component {
             newTips.splice(tips.length, 0, newTips[tipIndex]);
             newTips.splice(tipIndex, 1);
             this.routeToTip(newTips.length - 1);
-            this.setState(state => ({scrollToTipIdx: newTips.length - 1}));
+            this.setState(state => ({scrollOnModalExitedTipIdx: newTips.length - 1}));
           }
           break;
         case 'delete':
@@ -178,10 +182,20 @@ class TipsEditor extends Component {
 
         // Scroll new Tip into view
         this.routeToTip(newTips.length - 1);
-        this.setState(state => ({scrollToTipIdx: newTips.length - 1}));
+        this.setState(state => ({scrollOnModalExitedTipIdx: newTips.length - 1}));
       } else {
         return ;
       }
+    }
+  }
+
+  handleModalExited = () => {
+    const idx = this.state.scrollOnModalExitedTipIdx;
+
+    this.scrollTipIntoView(idx);
+
+    if (idx !== -1) {
+      this.setState(state => ({scrollOnModalExitedTipIdx: -1}));
     }
   }
 
@@ -248,6 +262,7 @@ class TipsEditor extends Component {
           show={showTipEditModal}
           onHide={this.handleHideTipEditModal}
           onChange={this.handleTipChange}
+          onExited={this.handleModalExited}          
           userSuggestions={userSuggestions}
           objectiveSuggestions={objectiveSuggestions}
         />
@@ -288,7 +303,14 @@ class TipsEditor extends Component {
               onFlipPage={this.onFlipPage}
             /> : null }
         </div>  
-        <TipMenuModal show={showTipMenu} onHide={this.handleHideTipMenu} onClick={this.handleClickMenuItem} tipIndex={selectedTipIdx} tipsLength={tips.length}/>
+        <TipMenuModal 
+          show={showTipMenu}
+          onHide={this.handleHideTipMenu}
+          onClick={this.handleClickMenuItem}
+          onExited={this.handleModalExited}          
+          tipIndex={selectedTipIdx}
+          tipsLength={tips.length}
+        />
         {readOnly ? null : this.renderTipEditModal()}
       </div>
     );
